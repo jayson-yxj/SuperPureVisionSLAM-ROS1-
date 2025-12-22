@@ -1,0 +1,8 @@
+prefix=/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/install
+
+Name: depth_maping
+Description: Description of depth_maping
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

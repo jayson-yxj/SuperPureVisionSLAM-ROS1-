@@ -1,0 +1,79 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# System config
+#--------------------------------------------------------------------------------------------
+
+# 注释掉的变量表示系统不加载先前会话或不存储当前会话
+# 如果LoadFile不存在，系统会提示信息并从头创建新地图集
+#System.LoadAtlasFromFile: "Session_MH01_MH02_MH03_Mono"
+
+# 存储文件从当前会话创建，如果同名文件存在会被删除
+#System.SaveAtlasToFile: "Session_MH01_MH02_MH03_Mono"
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+# File.version: "1.0"
+
+# 相机类型（KannalaBrandt8用于鱼眼相机，PinHole用于普通针孔相机）
+Camera.type: "KannalaBrandt8"
+
+# 相机标定和畸变参数（OpenCV）
+# 鱼眼相机使用k1-k4畸变参数[2](@ref)
+Camera.fx: 138.54264656
+Camera.fy: 138.60053687
+Camera.cx: 331.89824222
+Camera.cy: 239.70296783
+
+# KannalaBrandt8鱼眼畸变参数[2](@ref)
+Camera.k1: -0.05094921
+Camera.k2: -0.00983458
+Camera.k3: 0.00521841
+Camera.k4: -0.00128268
+
+# 图像分辨率[1](@ref)
+Camera.width: 640
+Camera.height: 480
+
+# Camera.newWidth: 640
+# Camera.newHeight: 480
+# 相机帧率[1](@ref)
+Camera.fps: 30.0
+
+# 双目基线×焦距（如果是双目相机需要此参数）[1](@ref)
+# Camera.bf: [需要根据实际基线值设置]
+
+# 图像颜色顺序（0: BGR, 1: RGB。灰度图像时忽略）
+Camera.RGB: 1
+
+#--------------------------------------------------------------------------------------------
+# ORB特征提取参数[6](@ref)
+#--------------------------------------------------------------------------------------------
+
+# 每幅图像提取的ORB特征点数
+ORBextractor.nFeatures: 1000
+
+# 尺度金字塔中层级间的尺度因子
+ORBextractor.scaleFactor: 1.2
+
+# 尺度金字塔的层级数
+ORBextractor.nLevels: 8
+
+# FAST角点检测阈值[6](@ref)
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# 可视化参数[6](@ref)
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500.0

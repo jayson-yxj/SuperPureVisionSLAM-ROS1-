@@ -1,0 +1,2 @@
+Line_detector:ORB_SLAM3_ROS:depth_maping:pub_video
+-DCATKIN_DEVEL_PREFIX=/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/devel -DCMAKE_INSTALL_PREFIX=/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/install -G Unix Makefiles

@@ -1,0 +1,6 @@
+/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/build/CMakeFiles/rebuild_cache.dir
+/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/build/CMakeFiles/edit_cache.dir
+/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/build/CMakeFiles/ORB_SLAM3.dir
+/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/build/Thirdparty/g2o/CMakeFiles/rebuild_cache.dir
+/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/build/Thirdparty/g2o/CMakeFiles/edit_cache.dir
+/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/build/Thirdparty/g2o/CMakeFiles/g2o.dir

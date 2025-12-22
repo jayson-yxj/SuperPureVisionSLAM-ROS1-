@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/install/setup.sh

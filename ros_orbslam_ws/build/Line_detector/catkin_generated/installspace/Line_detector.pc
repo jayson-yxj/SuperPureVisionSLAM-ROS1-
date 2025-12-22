@@ -1,0 +1,8 @@
+prefix=/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/install
+
+Name: Line_detector
+Description: Description of Line_detector
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

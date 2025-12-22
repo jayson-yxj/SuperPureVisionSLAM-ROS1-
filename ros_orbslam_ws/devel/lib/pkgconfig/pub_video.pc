@@ -1,0 +1,8 @@
+prefix=/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/devel
+
+Name: pub_video
+Description: Description of pub_video
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
