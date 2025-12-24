@@ -1,6 +1,7 @@
 # ORB-SLAM3 深度映射 ROS 集成
 
 基于 ORB-SLAM3 的视觉 SLAM 系统，集成深度估计和 3D 点云重建功能。
+<img width="1906" height="1035" alt="image" src="https://github.com/user-attachments/assets/e612218b-7c36-474b-8a05-53a5cef22a38" />
 
 ## 📋 目录
 
