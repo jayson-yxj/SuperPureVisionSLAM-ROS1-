@@ -1,2 +1,2 @@
-ORB_SLAM3_ROS:depth_maping:pub_video
+ORB_SLAM3_ROS:depth_maping:octomap_mapping:pub_video
 -DCATKIN_DEVEL_PREFIX=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/install -G Unix Makefiles

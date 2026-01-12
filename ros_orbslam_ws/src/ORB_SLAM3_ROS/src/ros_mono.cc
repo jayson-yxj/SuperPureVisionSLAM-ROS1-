@@ -52,7 +52,7 @@ public:
 
     // ************ time *****************//
     std::chrono::steady_clock::time_point time_start = std::chrono::steady_clock::now();
-    float time_diff_range = 0.65;
+    float time_diff_range = 0.;
 
 private:
     cv::Mat K = (cv::Mat_<double>(3, 3) << 
@@ -82,11 +82,11 @@ int main(int argc, char **argv)
     }    
 
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::MONOCULAR,true); // 可视化开关
+    ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::MONOCULAR,false); // 可视化开关
 
     ros::NodeHandle nodeHandler;
     ImageGrabber igb(&SLAM,&nodeHandler);
-    ros::Subscriber sub = nodeHandler.subscribe(FISHEYE_VIDEO, 1, &ImageGrabber::GrabImage,&igb);
+    ros::Subscriber sub = nodeHandler.subscribe(USB_RAW, 1, &ImageGrabber::GrabImage,&igb);
 
     ros::spin();
 
@@ -204,7 +204,7 @@ void ImageGrabber::GrabImage(const sensor_msgs::ImageConstPtr& msg)
     // cv::circle(RGBImage, imagePoint, 10, cv::Scalar(255, 255, 0), -1);
 
     FisheyeWarp(RGBImage, WarpImage, cv::Size(640, 480));
-    cv::imshow("ImagePoint", RGBImage);
+    // cv::imshow("ImagePoint", RGBImage);
     cv::imshow("WarpImage", WarpImage);
     if (cv::waitKey(1) == 's'){
         cout << "按压 s" <<endl;

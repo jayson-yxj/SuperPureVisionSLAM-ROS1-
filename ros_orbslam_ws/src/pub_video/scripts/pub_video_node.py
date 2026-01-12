@@ -3,19 +3,27 @@ import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
+VIDEO_PATH = 'src/video/ORBSLAM3.mp4'
+
 def image_publisher():
     rospy.init_node('fisheye_sub', anonymous=True)
     rospy.loginfo("fisheye pub中 ...")
     pub = rospy.Publisher('/fisheye/raw', Image, queue_size=10)
     bridge = CvBridge()
     rate = rospy.Rate(30)
-    cap = cv2.VideoCapture('src/video/ORBSLAM3.mp4')
+    cap = cv2.VideoCapture(VIDEO_PATH)
 
     while not rospy.is_shutdown():
         ret, frame = cap.read()
         if ret:
             ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
             pub.publish(ros_image)
+            cv2.imshow("Fisheye Camera", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        else:
+            rospy.logwarn("Failed to capture image")
+            break
         rate.sleep() 
 
     cap.release() 
