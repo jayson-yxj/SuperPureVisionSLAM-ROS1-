@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- move_base 节点 -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!-- 加载参数文件 -->
+    <rosparam file="$(find robot_navigation)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find robot_navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find robot_navigation)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find robot_navigation)/params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find robot_navigation)/params/dwa_local_planner_params.yaml" command="load" />
+    
+    <!-- 基本参数 -->
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    
+    <!-- 规划器频率 -->
+    <param name="planner_frequency" value="1.0" />
+    <param name="planner_patience" value="5.0" />
+    
+    <param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="15.0" />
+    
+    <!-- 恢复行为 -->
+    <param name="recovery_behavior_enabled" value="true" />
+    <param name="clearing_rotation_allowed" value="true" />
+    
+    <!-- 振荡抑制 -->
+    <param name="oscillation_timeout" value="10.0" />
+    <param name="oscillation_distance" value="0.2" />
+    
+    <!-- 全局规划器参数 -->
+    <rosparam>
+      GlobalPlanner:
+        allow_unknown: true
+        default_tolerance: 0.5
+        visualize_potential: false
+        use_dijkstra: true
+        use_quadratic: true
+        use_grid_path: false
+        old_navfn_behavior: false
+    </rosparam>
+  </node>
+</launch>

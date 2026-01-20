@@ -1,0 +1,52 @@
+# DWA (Dynamic Window Approach) 局部规划器参数
+# 用于动态避障和局部路径规划
+
+DWAPlannerROS:
+  # 机器人配置参数
+  max_vel_x: 0.5              # 最大线速度（米/秒）
+  min_vel_x: 0.0              # 最小线速度（米/秒）- 可以设为负值允许后退
+  
+  max_vel_y: 0.0              # 最大侧向速度（差速驱动为0）
+  min_vel_y: 0.0              # 最小侧向速度
+  
+  max_vel_trans: 0.5          # 最大平移速度（米/秒）
+  min_vel_trans: 0.1          # 最小平移速度（米/秒）
+  
+  max_vel_theta: 1.0          # 最大角速度（弧度/秒）
+  min_vel_theta: 0.4          # 最小角速度（弧度/秒）
+  
+  # 加速度限制
+  acc_lim_x: 2.5              # X方向加速度限制（米/秒²）
+  acc_lim_y: 0.0              # Y方向加速度限制（差速驱动为0）
+  acc_lim_theta: 3.2          # 角加速度限制（弧度/秒²）
+  
+  # 目标容差
+  yaw_goal_tolerance: 0.1     # 目标角度容差（弧度）~5.7度
+  xy_goal_tolerance: 0.2      # 目标位置容差（米）
+  latch_xy_goal_tolerance: false
+  
+  # DWA 采样参数
+  sim_time: 1.7               # 前向模拟时间（秒）
+  sim_granularity: 0.025      # 模拟步长（秒）
+  vx_samples: 10              # X速度采样数
+  vy_samples: 1               # Y速度采样数（差速驱动为1）
+  vtheta_samples: 20          # 角速度采样数
+  
+  # 轨迹评分权重
+  path_distance_bias: 32.0    # 路径距离权重（越大越倾向跟随全局路径）
+  goal_distance_bias: 24.0    # 目标距离权重（越大越倾向接近目标）
+  occdist_scale: 0.01         # 障碍物距离权重（越大越倾向远离障碍物）
+  forward_point_distance: 0.325  # 前向点距离（用于路径跟踪）
+  stop_time_buffer: 0.2       # 停止时间缓冲（秒）
+  scaling_speed: 0.25         # 缩放速度
+  max_scaling_factor: 0.2     # 最大缩放因子
+  
+  # 振荡抑制
+  oscillation_reset_dist: 0.05  # 振荡重置距离（米）
+  
+  # 发布
+  publish_traj_pc: true       # 发布轨迹点云（用于可视化）
+  publish_cost_grid_pc: false # 不发布代价网格（节省计算）
+  
+  # 全局规划
+  prune_plan: true            # 修剪已经过的路径点

@@ -67,7 +67,7 @@ case $choice in
         echo ""
         catkin_make
         roslaunch depth_maping slam_mapping.launch \
-            enable_rviz:=true \
+            enable_rviz:=false \
             enable_visualization:=false \
             sliding_window_size:=3
         ;;

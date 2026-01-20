@@ -87,7 +87,7 @@ int main(int argc, char **argv)
 
     ros::NodeHandle nodeHandler;
     ImageGrabber igb(&SLAM,&nodeHandler);
-    ros::Subscriber sub = nodeHandler.subscribe(USB_RAW, 1, &ImageGrabber::GrabImage,&igb);
+    ros::Subscriber sub = nodeHandler.subscribe(FISHEYE_VIDEO, 1, &ImageGrabber::GrabImage,&igb);
 
     ros::spin();
 

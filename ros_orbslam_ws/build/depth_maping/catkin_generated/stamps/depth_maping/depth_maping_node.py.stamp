@@ -265,7 +265,7 @@ class Img2DepthMaping:
         print("SE3: ",T_pp)
         print("SE3_inv: ",T_pp_inv)
 
-        raw_image = cv_image.copy()
+        raw_image = cv2.cvtColor(cv_image.copy(), cv2.COLOR_BGR2RGB)
         undistorted_frame = cv2.remap(raw_image, self.map1, self.map2, cv2.INTER_LINEAR)
         cv2.imshow("Undistorted Frame", undistorted_frame)
         cv2.waitKey(1)

@@ -1,0 +1,11 @@
+# 机器人物理参数
+robot_radius: 0.2          # 机器人半径（米）
+max_vel_x: 0.5            # 最大线速度（米/秒）
+max_vel_theta: 1.0        # 最大角速度（弧度/秒）
+acc_lim_x: 2.5            # 线加速度限制
+acc_lim_theta: 3.2        # 角加速度限制
+
+# TF 坐标系
+base_frame: "base_link"
+odom_frame: "odom"
+map_frame: "map"

@@ -1,0 +1,43 @@
+# 局部代价地图参数
+# 用于局部路径规划和避障
+
+local_costmap:
+  global_frame: odom
+  robot_base_frame: base_link
+  
+  update_frequency: 5.0      # 更新频率（Hz）- 局部地图需要更高频率
+  publish_frequency: 2.0     # 发布频率（Hz）
+  
+  # 使用滚动窗口（跟随机器人移动）
+  static_map: false
+  rolling_window: true
+  
+  # 局部地图尺寸（机器人周围的小范围）
+  width: 6.0                 # 宽度（米）
+  height: 6.0                # 高度（米）
+  resolution: 0.05           # 分辨率（米/格）
+  
+  # 插件配置
+  plugins:
+    - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer,     type: "costmap_2d::InflationLayer"}
+  
+  # 障碍物层配置
+  obstacle_layer:
+    enabled: true
+    observation_sources: point_cloud
+    point_cloud:
+      data_type: PointCloud2
+      topic: /o3d_pointCloud
+      marking: true
+      clearing: true
+      min_obstacle_height: 0.1
+      max_obstacle_height: 2.0
+      obstacle_range: 3.0      # 局部地图范围更小
+      raytrace_range: 4.0
+  
+  # 膨胀层配置
+  inflation_layer:
+    enabled: true
+    inflation_radius: 0.5
+    cost_scaling_factor: 10.0

@@ -1,0 +1,58 @@
+# 全局代价地图参数
+# 用于全局路径规划
+
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_link
+  
+  update_frequency: 1.0      # 更新频率（Hz）- 降低以节省计算
+  publish_frequency: 0.5     # 发布频率（Hz）
+  
+  # 使用动态地图（从 /projected_map 订阅）
+  static_map: false
+  rolling_window: false      # 不使用滚动窗口，使用完整地图
+  
+  # 地图尺寸（会根据实际地图自动调整）
+  width: 50.0
+  height: 50.0
+  resolution: 0.05           # 分辨率（米/格）- 与 depth_maping_node 的 resolution 一致
+  
+  # 坐标系原点
+  origin_x: 0.0
+  origin_y: 0.0
+  
+  # 插件配置
+  plugins:
+    - {name: static_layer,        type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer,     type: "costmap_2d::InflationLayer"}
+  
+  # 静态层配置（订阅 /projected_map）
+  static_layer:
+    map_topic: /projected_map
+    subscribe_to_updates: true
+    track_unknown_space: true
+    use_maximum: false
+    lethal_cost_threshold: 100
+    unknown_cost_value: -1
+    trinary_costmap: true
+  
+  # 障碍物层配置
+  obstacle_layer:
+    enabled: true
+    observation_sources: point_cloud
+    point_cloud:
+      data_type: PointCloud2
+      topic: /o3d_pointCloud
+      marking: true
+      clearing: true
+      min_obstacle_height: 0.1
+      max_obstacle_height: 2.0
+      obstacle_range: 5.0
+      raytrace_range: 6.0
+  
+  # 膨胀层配置
+  inflation_layer:
+    enabled: true
+    inflation_radius: 0.5
+    cost_scaling_factor: 10.0

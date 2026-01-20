@@ -1,12 +1,23 @@
 # ROS Navigation Stack 集成指南
 
-本文档说明如何将 ROS Navigation Stack 集成到当前的视觉SLAM系统中。
+本文档说明如何使用已集成的 ROS Navigation Stack 进行自主导航。
+
+## ✅ 已完成功能
+
+- ✅ TF 发布器（位姿转换）
+- ✅ move_base 导航节点
+- ✅ 全局/局部代价地图配置
+- ✅ DWA 局部规划器
+- ✅ 速度命令转发节点
+- ✅ RViz 可视化配置
+- ✅ 快速启动脚本
 
 ## 📋 前提条件
 
 - ✅ 已有 OccupancyGrid 地图发布到 `/projected_map`
 - ✅ ORB-SLAM3 提供位姿信息
-- ⚠️ 需要机器人底盘控制接口
+- ✅ TF 树自动发布（map -> odom -> base_link）
+- ⚠️ 需要机器人底盘控制接口（可选）
 
 ---
 
@@ -22,25 +33,21 @@ sudo apt-get install ros-noetic-navigation \
                      ros-noetic-dwa-local-planner
 ```
 
-### 2. 配置机器人参数
+### 2. 启动导航系统
 
-编辑 `config/robot_params.yaml`，填入您的机器人参数：
+**方法1：使用快速启动脚本（推荐）**
 
-```yaml
-# 机器人物理参数
-robot_radius: 0.2          # 机器人半径（米）
-max_vel_x: 0.5            # 最大线速度（米/秒）
-max_vel_theta: 1.0        # 最大角速度（弧度/秒）
-acc_lim_x: 2.5            # 线加速度限制
-acc_lim_theta: 3.2        # 角加速度限制
+```bash
+# 终端1: 启动SLAM和建图
+cd ~/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws
+./launch.sh
 
-# TF 坐标系
-base_frame: "base_link"
-odom_frame: "odom"
-map_frame: "map"
+# 终端2: 启动导航（等待SLAM初始化完成）
+cd ~/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws
+./start_navigation.sh
 ```
 
-### 3. 启动导航
+**方法2：手动启动**
 
 ```bash
 # 终端1: 启动SLAM和建图
@@ -48,15 +55,31 @@ cd ~/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws
 ./launch.sh
 
 # 终端2: 启动导航
+cd ~/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws
+source devel/setup.bash
 roslaunch robot_navigation navigation.launch
 ```
 
-### 4. 发送导航目标
+### 3. 发送导航目标
 
 在 RViz 中：
-1. 点击 "2D Nav Goal"
+1. 点击顶部工具栏的 **"2D Nav Goal"** 按钮
 2. 在地图上点击目标位置
-3. 拖动箭头设置目标方向
+3. 拖动鼠标设置目标方向
+4. 松开鼠标，机器人开始导航
+
+### 4. 配置机器人参数（可选）
+
+如需调整机器人参数，编辑 [`config/robot_params.yaml`](config/robot_params.yaml:1)：
+
+```yaml
+# 机器人物理参数
+robot_radius: 0.2          # 机器人半径（米）
+max_vel_x: 0.5            # 最大线速度（米/秒）
+max_vel_theta: 1.0        # 最大角速度（弧度/秒）
+```
+
+修改后需要重新启动导航系统。
 
 ---
 
@@ -129,59 +152,37 @@ local_costmap:
 
 ---
 
-## 🔧 需要实现的功能
+## 🔧 核心组件说明
 
-### 1. TF 发布器
+### 1. TF 发布器 ✅
 
-创建节点发布 TF 变换：
+**文件**: [`scripts/tf_publisher.py`](scripts/tf_publisher.py:1)
 
-```python
-#!/usr/bin/env python3
-import rospy
-import tf2_ros
-from geometry_msgs.msg import TransformStamped
+功能：
+- 订阅 ORB-SLAM3 位姿 (`/orb_slam3/image_pose`)
+- 发布 TF 树: `map -> odom -> base_link -> camera`
+- 发布里程计消息 (`/odom`)
 
-def publish_tf():
-    br = tf2_ros.TransformBroadcaster()
-    
-    # 从 ORB-SLAM3 获取位姿
-    # 发布 map -> odom -> base_link
-    
-    t = TransformStamped()
-    t.header.stamp = rospy.Time.now()
-    t.header.frame_id = "map"
-    t.child_frame_id = "odom"
-    # 填充位姿数据
-    br.sendTransform(t)
-```
+### 2. 速度命令转发 ✅
 
-### 2. 速度命令接口
+**文件**: [`scripts/cmd_vel_relay.py`](scripts/cmd_vel_relay.py:1)
 
-订阅 `/cmd_vel` 并转发给机器人：
+功能：
+- 订阅 move_base 的速度命令 (`/cmd_vel`)
+- 速度限制和安全检查
+- 转发到机器人底盘 (`/robot/cmd_vel`)
 
-```python
-def cmd_vel_callback(msg):
-    # msg.linear.x  - 线速度
-    # msg.angular.z - 角速度
-    # 发送给机器人底盘
-    pass
-```
+**配置**: 修改第40行的话题名以匹配实际机器人
 
-### 3. 里程计发布（可选）
+### 3. move_base 导航 ✅
 
-如果使用 AMCL，需要发布里程计：
+**文件**: [`launch/move_base.launch`](launch/move_base.launch:1)
 
-```python
-from nav_msgs.msg import Odometry
-
-def publish_odom():
-    odom = Odometry()
-    odom.header.stamp = rospy.Time.now()
-    odom.header.frame_id = "odom"
-    odom.child_frame_id = "base_link"
-    # 填充里程计数据
-    odom_pub.publish(odom)
-```
+功能：
+- 全局路径规划（GlobalPlanner）
+- 局部路径规划（DWA）
+- 代价地图管理
+- 恢复行为
 
 ---
 
@@ -222,12 +223,18 @@ angular:
 
 ---
 
-## 🎯 下一步
+## 🎯 使用建议
 
-1. **创建 TF 发布节点**: 将 ORB-SLAM3 位姿转换为 TF
-2. **配置机器人参数**: 根据实际机器人调整参数
-3. **实现速度控制接口**: 连接到机器人底盘
-4. **调试导航**: 在 RViz 中测试路径规划
+1. **首次使用**: 建议先在仿真环境或空旷区域测试
+2. **参数调优**: 根据实际机器人调整速度和代价地图参数
+3. **地图质量**: 确保 SLAM 地图质量良好，避免在光照不足或纹理缺乏的环境使用
+4. **实时性**: 如遇性能问题，可调整地图分辨率和更新频率
+5. **安全性**: 首次连接实际机器人时，建议设置较低的速度限制
+
+## 📖 详细文档
+
+- **使用指南**: [`docs/USAGE_GUIDE.md`](docs/USAGE_GUIDE.md:1) - 详细的使用说明和调试方法
+- **参数调优**: 查看各参数文件中的注释说明
 
 ---
 

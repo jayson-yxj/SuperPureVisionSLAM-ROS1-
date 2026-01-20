@@ -1,0 +1,30 @@
+# 代价地图通用参数
+# 适用于全局和局部代价地图
+
+# 障碍物层配置
+obstacle_range: 5.0        # 障碍物检测范围（米）
+raytrace_range: 6.0        # 光线追踪范围（米）
+
+# 机器人几何参数（从 robot_params.yaml 读取）
+footprint: [[-0.2, -0.2], [-0.2, 0.2], [0.2, 0.2], [0.2, -0.2]]  # 机器人轮廓（矩形）
+# 或使用圆形：
+# robot_radius: 0.2
+
+# 膨胀层参数
+inflation_radius: 0.5      # 膨胀半径（米）- 障碍物周围的安全距离
+cost_scaling_factor: 10.0  # 代价衰减因子（越大衰减越快）
+
+# 观测源配置
+observation_sources: point_cloud
+
+# 点云观测源（来自 ORB-SLAM3 + Depth Anything）
+point_cloud:
+  data_type: PointCloud2
+  topic: /o3d_pointCloud
+  marking: true            # 用于标记障碍物
+  clearing: true           # 用于清除障碍物
+  min_obstacle_height: 0.1 # 最小障碍物高度（米）
+  max_obstacle_height: 2.0 # 最大障碍物高度（米）
+  obstacle_range: 5.0
+  raytrace_range: 6.0
+  inf_is_valid: false      # 无穷大深度值无效

@@ -451,6 +451,9 @@ class_loader_DIR:PATH=/opt/ros/noetic/share/class_loader/cmake
 //The directory containing a CMake configuration file for cmake_modules.
 cmake_modules_DIR:PATH=/opt/ros/noetic/share/cmake_modules/cmake
 
+//The directory containing a CMake configuration file for costmap_2d.
+costmap_2d_DIR:PATH=/opt/ros/noetic/share/costmap_2d/cmake
+
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/noetic/share/cpp_common/cmake
 
@@ -462,6 +465,9 @@ depth_maping_BINARY_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_d
 
 //Value Computed by CMake
 depth_maping_SOURCE_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/depth_maping
+
+//The directory containing a CMake configuration file for dynamic_reconfigure.
+dynamic_reconfigure_DIR:PATH=/opt/ros/noetic/share/dynamic_reconfigure/cmake
 
 //Value Computed by CMake
 eigen_catkin_BINARY_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/eigen_catkin
@@ -559,8 +565,14 @@ gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 //The directory containing a CMake configuration file for image_transport.
 image_transport_DIR:PATH=/opt/ros/noetic/share/image_transport/cmake
 
+//The directory containing a CMake configuration file for laser_geometry.
+laser_geometry_DIR:PATH=/opt/ros/noetic/share/laser_geometry/cmake
+
 //Path to a library.
-lib:FILEPATH=/opt/ros/noetic/lib/libtf2.so
+lib:FILEPATH=/opt/ros/noetic/lib/libvoxel_grid.so
+
+//The directory containing a CMake configuration file for map_msgs.
+map_msgs_DIR:PATH=/opt/ros/noetic/share/map_msgs/cmake
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/noetic/share/message_filters/cmake
@@ -572,7 +584,10 @@ message_generation_DIR:PATH=/opt/ros/noetic/share/message_generation/cmake
 message_runtime_DIR:PATH=/opt/ros/noetic/share/message_runtime/cmake
 
 //The directory containing a CMake configuration file for move_base.
-move_base_DIR:PATH=move_base_DIR-NOTFOUND
+move_base_DIR:PATH=/opt/ros/noetic/share/move_base/cmake
+
+//The directory containing a CMake configuration file for move_base_msgs.
+move_base_msgs_DIR:PATH=/opt/ros/noetic/share/move_base_msgs/cmake
 
 //The directory containing a CMake configuration file for nav_msgs.
 nav_msgs_DIR:PATH=/opt/ros/noetic/share/nav_msgs/cmake
@@ -661,11 +676,17 @@ tf2_ros_DIR:PATH=/opt/ros/noetic/share/tf2_ros/cmake
 //The directory containing a CMake configuration file for tf.
 tf_DIR:PATH=/opt/ros/noetic/share/tf/cmake
 
+//The directory containing a CMake configuration file for visualization_msgs.
+visualization_msgs_DIR:PATH=/opt/ros/noetic/share/visualization_msgs/cmake
+
 //Value Computed by CMake
 voxblox_BINARY_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/voxblox/voxblox
 
 //Value Computed by CMake
 voxblox_SOURCE_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/voxblox/voxblox
+
+//The directory containing a CMake configuration file for voxel_grid.
+voxel_grid_DIR:PATH=/opt/ros/noetic/share/voxel_grid/cmake
 
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/noetic/share/xmlrpcpp/cmake
