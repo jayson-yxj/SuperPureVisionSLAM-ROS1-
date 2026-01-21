@@ -1,0 +1,101 @@
+# Depth Mapping 默认配置文件
+# 版本: v1.0
+
+# ==================== 深度估计配置 ====================
+depth_estimator:
+  type: depth_anything_v2  # 深度估计器类型
+  model_path: /home/sunteng/Downloads/depth_anything_v2_metric_hypersim_vitb.pth
+  encoder: vitb  # 编码器类型: vits, vitb, vitl, vitg
+  input_size: 256  # 输入图像尺寸: 256, 384, 512, 640
+  max_depth: 70.0  # 最大深度值（米）
+  device: cuda  # 计算设备: cuda, cpu, mps
+  
+  # 深度图预处理配置
+  depth_preprocessing:
+    enabled: true  # 是否启用深度图预处理（降噪）
+    kernel_size: 5  # 滤波核大小
+    threshold: 0.07  # 梯度阈值
+
+# ==================== 点云生成配置 ====================
+point_cloud:
+  # 裁剪参数（可选，用于边缘裁剪）
+  crop_params:
+    img_crop_size: 128  # 裁剪系数（128表示裁剪1/128边缘）
+    max_depth: 35.0  # 最大深度阈值（米）
+  
+  # 过滤参数
+  filter:
+    depth_range: [0.1, 100.0]  # 深度范围（米）
+    # 高度过滤模式：'relative' 或 'absolute'
+    height_filter_mode: relative  # 相对模式（基于点云高度范围的百分比）
+    # 相对模式参数（百分比，0.0-1.0）
+    height_ratio_range: [0.5, 1.0]  # 保留相机高度30%以上、200%以下的点
+    # 绝对模式参数（米，仅在 height_filter_mode: absolute 时使用）
+    # height_range: [-2.0, 3.0]
+  
+  # 下采样参数
+  voxel_size: 1.0  # 体素大小（米）
+
+# ==================== 地图构建配置 ====================
+map:
+  type: occupancy_grid  # 地图类型
+  
+  # 滑动窗口配置
+  sliding_window:
+    enabled: true  # 是否启用滑动窗口
+    size: 5  # 窗口大小（帧数）
+  
+  # 最大点数限制（可选，用于累积模式）
+  # max_points: 1000000
+  
+  # 2D地图生成参数
+  resolution: 0.8  # 网格分辨率（米/格）
+  height_range: [0.5, 0.6]  # 高度范围（百分比或绝对值）
+  use_ratio: true  # 是否使用百分比模式
+  occupied_thresh: 3  # 占用阈值（点数）
+
+# ==================== 相机参数 ====================
+camera:
+  fx: 138.54264656
+  fy: 138.60053687
+  cx: 331.89824222
+  cy: 239.70296783
+  
+  # 畸变参数（鱼眼相机）
+  distortion:
+    k1: -0.05094921
+    k2: -0.00983458
+    k3: 0.00521841
+    k4: -0.00128268
+
+# ==================== 位姿处理配置 ====================
+pose:
+  translation_scale: 18  # 平移向量缩放倍率
+
+# ==================== ROS话题配置 ====================
+ros:
+  topics:
+    input_image_pose: /orb_slam3/image_pose
+    output_point_cloud: /o3d_pointCloud
+    output_map: /projected_map
+  
+  # 发布频率控制
+  publish_rate:
+    point_cloud: 1  # 每N帧发布一次点云
+    map: 1  # 每N帧发布一次地图
+
+# ==================== 可视化配置 ====================
+visualization:
+  enabled: false  # 是否启用Open3D可视化（建议禁用以提升性能）
+  window_size: [1280, 960]
+
+# ==================== 性能分析配置 ====================
+profiling:
+  enabled: true  # 是否启用性能分析
+  log_interval: 5  # 日志输出间隔（秒）
+
+# ==================== 重力对齐配置 ====================
+gravity_alignment:
+  enabled: true  # 是否启用重力对齐
+  save_interval: 1.0  # 保存图像和位姿的间隔（秒）
+  check_interval: 0.5  # 检查R_align更新的间隔（秒）

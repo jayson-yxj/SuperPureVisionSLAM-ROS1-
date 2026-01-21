@@ -5,6 +5,7 @@ from cv_bridge import CvBridge
 
 VIDEO_PATH = '/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/video/ORBSLAM3_low_pose.mp4'
 VIDEO_PATH2 = '/home/sunteng/Desktop/HighTorque_vision/video/hightorque_room.mp4'
+VIDEO_PATH3 = '/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/video/ORBSLAM3.mp4'
 
 def image_publisher():
     rospy.init_node('fisheye_sub', anonymous=True)
@@ -12,7 +13,7 @@ def image_publisher():
     pub = rospy.Publisher('/fisheye/raw', Image, queue_size=10)
     bridge = CvBridge()
     rate = rospy.Rate(30)
-    cap = cv2.VideoCapture(VIDEO_PATH)
+    cap = cv2.VideoCapture(VIDEO_PATH2)
 
     while not rospy.is_shutdown():
         ret, frame = cap.read()

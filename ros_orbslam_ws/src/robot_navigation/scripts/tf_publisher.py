@@ -91,24 +91,34 @@ class TFPublisher:
             msg.pose.orientation.w
         ])
         
-        # 坐标系转换矩阵：CV -> ROS
-        # ROS_X = CV_Z (前)
-        # ROS_Y = -CV_X (左)
-        # ROS_Z = -CV_Y (上)
+        # 坐标系转换矩阵：CV -> ROS (选项 2 - 测试验证正确)
+        # ORB-SLAM3 (CV): Z前, X右, Y下
+        # ROS: X前, Y左, Z上
         T_cv_to_ros = np.array([
-            [0,  0,  1],   # ROS X = CV Z
-            [1, 0,  0],   # ROS Y = -CV X
-            [0, 1,  0]    # ROS Z = -CV Y
+            [0,  0,  1],   # ROS X = CV Z (前)
+            [-1, 0,  0],   # ROS Y = -CV X (左)
+            [0, -1,  0]    # ROS Z = -CV Y (上)
         ])
         
-        # 转换位置
-        pos_ros = T_cv_to_ros @ pos_cv
+        # 转换位置（乘以尺度因子 16，与 depth_maping_node.py 的 translation_size 一致）
+        pos_ros = T_cv_to_ros @ (pos_cv * 16)
         
-        # 转换姿态
+        # 转换姿态：使用四元数组合（避免在全局坐标系中旋转）
+        # 步骤1：定义 CV 到 ROS 的坐标系旋转
+        rot_cv_to_ros = R.from_matrix(T_cv_to_ros)
+        
+        # 步骤2：获取 CV 坐标系中的旋转
         rot_cv = R.from_quat(quat_cv)
-        rot_matrix_cv = rot_cv.as_matrix()
-        rot_matrix_ros = T_cv_to_ros @ rot_matrix_cv @ T_cv_to_ros.T
-        rot_ros = R.from_matrix(rot_matrix_ros)
+        
+        # 步骤3：组合旋转（先应用 CV 旋转，再应用坐标系转换）
+        # 注意：这里的顺序很重要！
+        # rot_ros = rot_cv_to_ros * rot_cv 会导致在全局坐标系旋转
+        # 正确的方式是：rot_ros = rot_cv_to_ros * rot_cv * rot_cv_to_ros.inv()
+        # 但这等价于相似变换，仍然不对
+        
+        # 正确方法：直接使用四元数乘法，但要注意顺序
+        # 我们需要：先转换坐标系，再应用旋转
+        rot_ros = rot_cv_to_ros * rot_cv
         quat_ros = rot_ros.as_quat()
         
         # 缓存转换后的位姿

@@ -5,19 +5,19 @@ global_costmap:
   global_frame: map
   robot_base_frame: base_link
   
-  update_frequency: 1.0      # 更新频率（Hz）- 降低以节省计算
-  publish_frequency: 0.5     # 发布频率（Hz）
+  update_frequency: 2.0      # 更新频率（Hz）- 降低以节省计算
+  publish_frequency: 1.0     # 发布频率（Hz）
   
   # 使用动态地图（从 /projected_map 订阅）
   static_map: false
-  rolling_window: false      # 不使用滚动窗口，使用完整地图
+  rolling_window: true       # 使用滚动窗口，跟随机器人移动
   
-  # 地图尺寸（会根据实际地图自动调整）
-  width: 50.0
-  height: 50.0
-  resolution: 0.05           # 分辨率（米/格）- 与 depth_maping_node 的 resolution 一致
+  # 地图尺寸（滚动窗口大小）
+  width: 100.0               # 增大到 100 米
+  height: 100.0              # 增大到 100 米
+  resolution: 0.8            # 分辨率（米/格）- 与 depth_maping_node 的 resolution 一致
   
-  # 坐标系原点
+  # 坐标系原点（滚动窗口模式下会自动调整）
   origin_x: 0.0
   origin_y: 0.0
   

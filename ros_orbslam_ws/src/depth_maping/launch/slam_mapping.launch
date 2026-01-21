@@ -85,6 +85,9 @@
         <node name="rviz" pkg="rviz" type="rviz" output="screen" respawn="false"
               args="-d $(find depth_maping)/rviz/slam_mapping.rviz" />
     </group>
+
+    <!-- 6. ros 导航 -->
+    <include file="$(find robot_navigation)/launch/navigation.launch"/>
     
     <!-- ==================== 系统信息 ==================== -->
     <node name="system_monitor" pkg="rostopic" type="rostopic" output="screen"
