@@ -6,7 +6,7 @@ depth_estimator:
   type: depth_anything_v2  # 深度估计器类型
   model_path: /home/sunteng/Downloads/depth_anything_v2_metric_hypersim_vitb.pth
   encoder: vitb  # 编码器类型: vits, vitb, vitl, vitg
-  input_size: 256  # 输入图像尺寸: 256, 384, 512, 640
+  input_size: 384  # 输入图像尺寸: 256, 384, 512, 640
   max_depth: 70.0  # 最大深度值（米）
   device: cuda  # 计算设备: cuda, cpu, mps
   
@@ -21,7 +21,7 @@ point_cloud:
   # 裁剪参数（可选，用于边缘裁剪）
   crop_params:
     img_crop_size: 128  # 裁剪系数（128表示裁剪1/128边缘）
-    max_depth: 35.0  # 最大深度阈值（米）
+    max_depth: 40.0  # 最大深度阈值（米）
   
   # 过滤参数
   filter:
@@ -93,6 +93,15 @@ visualization:
 profiling:
   enabled: true  # 是否启用性能分析
   log_interval: 5  # 日志输出间隔（秒）
+
+# ==================== 并行处理配置 ====================
+parallel_processing:
+  enabled: false  # 是否启用并行处理（多线程）
+  queue_size: 10  # 队列大小（控制内存占用）
+  # 注意：
+  # - 启用并行处理可提升30-50%性能
+  # - 需要确保线程安全
+  # - 队列大小建议设置为2-3，避免内存溢出
 
 # ==================== 重力对齐配置 ====================
 gravity_alignment:

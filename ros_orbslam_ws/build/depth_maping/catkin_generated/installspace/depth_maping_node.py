@@ -36,6 +36,7 @@ if script_dir not in sys.path:
 
 # 导入重构后的模块
 from pipeline_manager import PipelineManager
+from parallel_pipeline_manager import ParallelPipelineManager
 
 
 class DepthMappingNode:
@@ -54,8 +55,18 @@ class DepthMappingNode:
         # 加载配置
         self.config = self._load_config()
         
-        # 初始化Pipeline Manager
-        self.pipeline = PipelineManager(config_dict=self.config)
+        # 初始化Pipeline Manager（根据配置选择串行或并行模式）
+        parallel_config = self.config.get('parallel_processing', {})
+        enable_parallel = parallel_config.get('enabled', False)
+        
+        if enable_parallel:
+            self.pipeline = ParallelPipelineManager(config_dict=self.config)
+            self.use_parallel = True
+            rospy.loginfo("✓ 使用并行处理模式")
+        else:
+            self.pipeline = PipelineManager(config_dict=self.config)
+            self.use_parallel = False
+            rospy.loginfo("✓ 使用串行处理模式")
         
         # 相机参数
         camera_config = self.config['camera']
@@ -244,11 +255,24 @@ class DepthMappingNode:
             'cy': self.cy
         }
         
-        result = self.pipeline.process_frame(
-            undistorted_frame,
-            T_pp_inv_scaled,
-            camera_params
-        )
+        if self.use_parallel:
+            # 并行模式：异步提交任务
+            success = self.pipeline.process_frame_async(
+                undistorted_frame,
+                T_pp_inv_scaled,
+                camera_params
+            )
+            if not success:
+                rospy.logwarn_throttle(2, "⚠️  处理队列已满，跳过当前帧")
+            # 并行模式下不返回result，直接发布当前地图状态
+            result = None
+        else:
+            # 串行模式：同步处理
+            result = self.pipeline.process_frame(
+                undistorted_frame,
+                T_pp_inv_scaled,
+                camera_params
+            )
         
         # 发布点云
         if self.frame_counter % self.point_cloud_publish_rate == 0:
@@ -280,18 +304,34 @@ class DepthMappingNode:
                 rospy.logwarn_throttle(10, f"渲染失败: {e}")
         
         # 性能日志
-        if self.enable_profiling:
-            profiling = result.get('profiling')
-            if profiling:
-                current_time = time.time()
-                if current_time - self.last_profiling_log_time >= self.profiling_log_interval:
-                    total_time = profiling['total']
+        if self.enable_profiling and not self.use_parallel:
+            # 串行模式：使用result中的profiling数据
+            if result:
+                profiling = result.get('profiling')
+                if profiling:
+                    current_time = time.time()
+                    if current_time - self.last_profiling_log_time >= self.profiling_log_interval:
+                        total_time = profiling['total']
+                        rospy.loginfo(
+                            f"⏱️  性能: 深度={profiling['depth_estimation']*1000:.1f}ms, "
+                            f"点云={profiling['point_cloud_generation']*1000:.1f}ms, "
+                            f"总计={total_time*1000:.1f}ms ({1/total_time:.1f} FPS)"
+                        )
+                        self.last_profiling_log_time = current_time
+        elif self.enable_profiling and self.use_parallel:
+            # 并行模式：定期打印性能摘要
+            current_time = time.time()
+            if current_time - self.last_profiling_log_time >= self.profiling_log_interval:
+                summary = self.pipeline.get_profiling_summary()
+                if summary and 'total' in summary:
+                    avg_fps = 1.0 / summary['total']['mean']
                     rospy.loginfo(
-                        f"⏱️  性能: 深度={profiling['depth_estimation']*1000:.1f}ms, "
-                        f"点云={profiling['point_cloud_generation']*1000:.1f}ms, "
-                        f"总计={total_time*1000:.1f}ms ({1/total_time:.1f} FPS)"
+                        f"⏱️  并行处理性能: "
+                        f"深度={summary['depth_estimation']['mean']*1000:.1f}ms, "
+                        f"点云={summary['point_cloud_generation']['mean']*1000:.1f}ms, "
+                        f"平均FPS={avg_fps:.1f}"
                     )
-                    self.last_profiling_log_time = current_time
+                self.last_profiling_log_time = current_time
     
     def _o3d_to_ros_pointcloud2(self, o3d_pcd, frame_id="map") -> PointCloud2:
         """将Open3D点云转换为ROS PointCloud2消息"""
@@ -451,6 +491,10 @@ class DepthMappingNode:
         """节点关闭处理"""
         self.is_shutdown = True
         rospy.loginfo("正在关闭节点...")
+        
+        # 关闭并行处理线程
+        if self.use_parallel:
+            self.pipeline.shutdown()
         
         # 等待回调完成
         rospy.sleep(0.5)
