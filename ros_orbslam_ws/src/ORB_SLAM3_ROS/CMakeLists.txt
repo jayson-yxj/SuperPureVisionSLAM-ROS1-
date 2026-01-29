@@ -82,3 +82,12 @@ target_link_libraries(orb_mono
 ${LIBS}
 ${catkin_LIBRARIES}
 )
+
+add_executable(Stereo src/ros_stereo.cc)
+
+add_dependencies(Stereo ${PROJECT_NAME}_generate_messages_cpp)
+
+target_link_libraries(Stereo
+${LIBS}
+${catkin_LIBRARIES}
+)

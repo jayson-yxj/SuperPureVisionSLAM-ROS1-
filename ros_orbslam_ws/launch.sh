@@ -66,6 +66,7 @@ case $choice in
         echo -e "${BLUE}启动标准模式...${NC}"
         echo ""
         catkin_make
+        source devel/setup.bash
         roslaunch depth_maping slam_mapping.launch \
             enable_rviz:=false \
             enable_visualization:=false \
