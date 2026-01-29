@@ -318,6 +318,21 @@ orb_slam3_ros_gennodejs/fast:
 .PHONY : orb_slam3_ros_gennodejs/fast
 
 # Convenience name for target.
+ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/rule:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/rule
+.PHONY : ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/rule
+
+# Convenience name for target.
+Stereo: ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/rule
+
+.PHONY : Stereo
+
+# fast build rule for target.
+Stereo/fast:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/build
+.PHONY : Stereo/fast
+
+# Convenience name for target.
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_genpy.dir/rule:
 	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_genpy.dir/rule
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_genpy.dir/rule
@@ -389,6 +404,33 @@ src/ros_mono.cc.s:
 	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/src/ros_mono.cc.s
 .PHONY : src/ros_mono.cc.s
 
+src/ros_stereo.o: src/ros_stereo.cc.o
+
+.PHONY : src/ros_stereo.o
+
+# target to build an object file
+src/ros_stereo.cc.o:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/src/ros_stereo.cc.o
+.PHONY : src/ros_stereo.cc.o
+
+src/ros_stereo.i: src/ros_stereo.cc.i
+
+.PHONY : src/ros_stereo.i
+
+# target to preprocess a source file
+src/ros_stereo.cc.i:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/src/ros_stereo.cc.i
+.PHONY : src/ros_stereo.cc.i
+
+src/ros_stereo.s: src/ros_stereo.cc.s
+
+.PHONY : src/ros_stereo.s
+
+# target to generate assembly for a file
+src/ros_stereo.cc.s:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/src/ros_stereo.cc.s
+.PHONY : src/ros_stereo.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -411,6 +453,7 @@ help:
 	@echo "... orb_slam3_ros_generate_messages_nodejs"
 	@echo "... orb_slam3_ros_genlisp"
 	@echo "... orb_slam3_ros_gennodejs"
+	@echo "... Stereo"
 	@echo "... orb_slam3_ros_genpy"
 	@echo "... orb_slam3_ros_generate_messages_py"
 	@echo "... install"
@@ -418,6 +461,9 @@ help:
 	@echo "... src/ros_mono.o"
 	@echo "... src/ros_mono.i"
 	@echo "... src/ros_mono.s"
+	@echo "... src/ros_stereo.o"
+	@echo "... src/ros_stereo.i"
+	@echo "... src/ros_stereo.s"
 .PHONY : help
 
 

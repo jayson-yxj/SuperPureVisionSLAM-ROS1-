@@ -25,7 +25,6 @@
     <param name="base_link_frame" value="base_link"/>
     <param name="camera_frame" value="camera"/>
   </node>
- 
   
   <!-- 2. move_base 导航节点 -->
   <include file="$(find robot_navigation)/launch/move_base.launch"/>

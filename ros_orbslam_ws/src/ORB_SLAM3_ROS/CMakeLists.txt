@@ -26,6 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   image_transport
   message_generation
+  monster
   roscpp
   rospy
   sensor_msgs
@@ -66,12 +67,13 @@ ${PROJECT_SOURCE_DIR}/../../../lib/libORB_SLAM3.so
 )
 
 catkin_package(
-  CATKIN_DEPENDS 
-    roscpp 
-    std_msgs 
+  CATKIN_DEPENDS
+    roscpp
+    std_msgs
     sensor_msgs    # 必须添加
     geometry_msgs  # 必须添加
     message_runtime
+    monster        # 添加 monster 依赖
 )
 
 add_executable(orb_mono src/ros_mono.cc)

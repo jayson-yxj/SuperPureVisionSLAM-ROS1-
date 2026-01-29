@@ -1,2 +1,2 @@
-ORB_SLAM3_ROS:aws-robomaker-bookstore-world:aws-robomaker-small-house-world:depth_maping:pub_video:robot_navigation
+ORB_SLAM3_ROS:aws-robomaker-bookstore-world:aws-robomaker-small-house-world:depth_maping:monster:pub_video:robot_navigation
 -DCATKIN_DEVEL_PREFIX=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/install -G Unix Makefiles

@@ -1,0 +1,23 @@
+# Monster 双目深度估计配置文件
+
+# 模型参数
+model_path: "/home/sunteng/Desktop/HighTorque_vision/MonSter-plusplus/RT-MonSter++/checkpoints/Zero_shot.pth"
+encoder: "vits"  # 可选: vits, vitb, vitl, vitg
+valid_iters: 15   # 推理迭代次数，越多越精确但越慢 (1=最快, 2=平衡, 3+=高精度)
+
+# 相机参数
+baseline: 0.0629        # 双目基线距离 (米)，需要根据实际相机调整
+focal_length: 730.97   # 焦距 (像素)，需要根据实际相机调整
+
+# 架构参数
+hidden_dims: [32, 64, 96]
+corr_implementation: "reg"  # 相关体实现方式: reg, alt, reg_cuda, alt_cuda
+corr_levels: 2
+corr_radius: [2, 2, 4]
+n_downsample: 2
+n_gru_layers: 3
+max_disp: 416
+mixed_precision: false  # 设为 true 可能更快但需要 GPU 支持
+
+# 显示参数
+display: true  # 是否显示可视化窗口

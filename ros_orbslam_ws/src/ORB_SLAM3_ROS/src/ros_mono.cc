@@ -201,7 +201,7 @@ void ImageGrabber::GrabImage(const sensor_msgs::ImageConstPtr& msg)
     cv::Mat blackImage = cv::Mat::zeros(480, 640, CV_8UC3);
     cv::Mat RGBImage;
     cv::Mat WarpImage;
-    
+
     // 投影到图像坐标系
     cv::cvtColor(cv_ptr->image, RGBImage, cv::COLOR_BGR2RGB);
     imagePoint = cam2img(cv::Point3f(camera_point[0], camera_point[1], camera_point[2]));

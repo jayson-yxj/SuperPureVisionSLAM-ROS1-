@@ -5,7 +5,10 @@
 ;;  FROM /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/ORB_SLAM3_ROS/package.xml (0.0.0)
 ;; USING /opt/ros/noetic/lib/python3/dist-packages/geneus/geneus_main.py /opt/ros/noetic/share/geneus/package.xml (3.0.0)
 ;;
+(ros::load-ros-package "actionlib_msgs")
 (ros::load-ros-package "geometry_msgs")
+(ros::load-ros-package "monster")
+(ros::load-ros-package "nav_msgs")
 (ros::load-ros-package "roscpp")
 (ros::load-ros-package "rosgraph_msgs")
 (ros::load-ros-package "sensor_msgs")

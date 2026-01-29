@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Monster 双目深度估计节点 -->
+    
+    <!-- 配置文件路径 -->
+    <arg name="config_file" default="$(find monster)/config/monster_config.yaml" />
+    
+    <!-- Monster 深度估计节点 -->
+    <node name="monster_stereo_node" pkg="monster" type="monster_stereo_node.py" output="screen">
+        <!-- 加载配置文件 - 所有参数从配置文件读取 -->
+        <rosparam command="load" file="$(arg config_file)" />
+    </node>
+    
+    <!--
+    如果需要临时覆盖参数，使用以下命令：
+    roslaunch monster monster_stereo.launch baseline:=0.0629 focal_length:=730.97
+    
+    或者直接修改配置文件：
+    $(find monster)/config/monster_config.yaml
+    -->
+    
+</launch>

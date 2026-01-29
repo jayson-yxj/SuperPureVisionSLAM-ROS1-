@@ -7,8 +7,6 @@
                :std_msgs-msg
 )
   :components ((:file "_package")
-    (:file "GravityEstimateData" :depends-on ("_package_GravityEstimateData"))
-    (:file "_package_GravityEstimateData" :depends-on ("_package"))
     (:file "ImagePose" :depends-on ("_package_ImagePose"))
     (:file "_package_ImagePose" :depends-on ("_package"))
   ))
