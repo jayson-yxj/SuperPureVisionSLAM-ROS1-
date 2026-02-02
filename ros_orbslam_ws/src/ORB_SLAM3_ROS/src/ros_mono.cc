@@ -83,7 +83,7 @@ int main(int argc, char **argv)
     }    
 
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::MONOCULAR,false); // 可视化开关
+    ORB_SLAM3::System SLAM(argv[1],argv[2],ORB_SLAM3::System::MONOCULAR,true); // 可视化开关
 
     ros::NodeHandle nodeHandler;
     ImageGrabber igb(&SLAM,&nodeHandler);
@@ -209,16 +209,16 @@ void ImageGrabber::GrabImage(const sensor_msgs::ImageConstPtr& msg)
 
     FisheyeWarp(RGBImage, WarpImage, cv::Size(640, 480));
     // cv::imshow("ImagePoint", RGBImage);
-    // cv::imshow("WarpImage", WarpImage);
+    cv::imshow("WarpImage", WarpImage);
     if (cv::waitKey(1) == 's'){
         cout << "按压 s" <<endl;
         // 保存图片
-        std::string img_path = "/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/src/ORB_SLAM3_ROS/color_img/" + std::to_string(index) + ".png";
+        std::string img_path = "/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/ORB_SLAM3_ROS/color_img/" + std::to_string(index) + ".png";
         if(!cv::imwrite(img_path, RGBImage)){
             ROS_ERROR("保存图片失败: %s", img_path.c_str());
         } else {
             // 追加写入位移向量(t)和四元数(q)到 info.txt
-            std::ofstream ofs("/home/yxj/Hightorque_vision/orbslam_depthmaping_ros/ros_orbslam_ws/src/ORB_SLAM3_ROS/color_img/" + std::to_string(index) + ".txt", std::ios::app);
+            std::ofstream ofs("/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/ORB_SLAM3_ROS/color_img/" + std::to_string(index) + ".txt", std::ios::app);
             if (ofs.is_open()){
                 ofs << t_right(0) << " " << t_right(1) << " " << t_right(2) << " " 
                     << q.x() << " " << q.y() << " " << q.z() << " " << q.w()

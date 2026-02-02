@@ -19,7 +19,6 @@ def image_publisher():
         ret, frame = cap.read()
         if ret:
             ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
-            # 🔥 修复：设置当前时间戳（视频回放时必须使用当前时间）
             ros_image.header.stamp = rospy.Time.now()
             ros_image.header.frame_id = "camera"
             pub.publish(ros_image)

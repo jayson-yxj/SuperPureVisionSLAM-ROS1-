@@ -7,7 +7,19 @@ valid_iters: 15   # 推理迭代次数，越多越精确但越慢 (1=最快, 2=�
 
 # 相机参数
 baseline: 0.0629        # 双目基线距离 (米)，需要根据实际相机调整
-focal_length: 730.97   # 焦距 (像素)，需要根据实际相机调整
+focal_length: 365.485   # 焦距 (像素)，用于深度估计
+
+# 点云生成的相机内参（需要根据实际相机标定结果调整）
+# 注意：如果图像被缩放，内参也需要相应缩放
+camera_intrinsics:
+  fx: 365.485  # 焦距 X (像素) - 对于 640x360 图像
+  fy: 365.485  # 焦距 Y (像素)
+  cx: 314.486  # 光心 X (像素) - 图像宽度的一半
+  cy: 179.739  # 光心 Y (像素) - 图像高度的一半
+  # 如果你的原始图像是 1280x720，内参应该是：
+  # fx: 730.97, fy: 730.97, cx: 640.0, cy: 360.0
+  # 如果缩放到 640x360，内参需要除以 2：
+  # fx: 365.485, fy: 365.485, cx: 320.0, cy: 180.0
 
 # 架构参数
 hidden_dims: [32, 64, 96]
@@ -20,4 +32,52 @@ max_disp: 416
 mixed_precision: false  # 设为 true 可能更快但需要 GPU 支持
 
 # 显示参数
-display: true  # 是否显示可视化窗口
+display: false  # 是否显示可视化窗口
+
+# ==================== 点云生成配置 ====================
+point_cloud:
+  # 过滤参数
+  filter:
+    max_depth: 3.0  # 最大深度阈值（米）- 降低以提高点云密度
+    # 高度过滤模式：'relative' 或 'absolute'
+    height_filter_mode: relative  # 相对模式（基于点云高度范围的百分比）
+    # 相对模式参数（百分比，0.0-1.0）
+    height_ratio_range: [0.0, 1.0]  # 保留所有高度的点（0%-100%）
+    # 绝对模式参数（米，仅在 height_filter_mode: absolute 时使用）
+    # height_range: [-2.0, 3.0]
+  
+  # 下采样参数
+  voxel_size: 0.3  # 体素大小（米）- 从 1.0 降到 0.05，大幅增加点云密度
+
+# ==================== 地图构建配置 ====================
+map:
+  # 滑动窗口配置
+  sliding_window:
+    enabled: true  # 是否启用滑动窗口
+    size: 3  # 窗口大小（帧数）
+  
+  # 最大点数限制（可选，用于累积模式）
+  # max_points: 1000000
+  
+  # 2D地图生成参数
+  resolution: 0.1  # 网格分辨率（米/格）
+  height_range: [0.5, 0.6]  # 高度范围（百分比或绝对值）
+  use_ratio: true  # 是否使用百分比模式
+  occupied_thresh: 3  # 占用阈值（点数）
+
+# ==================== ROS话题配置 ====================
+ros:
+  topics:
+    output_point_cloud: /o3d_pointCloud
+    output_map: /projected_map
+  
+  # 发布频率控制
+  publish_rate:
+    point_cloud: 1  # 每N帧发布一次点云
+    map: 1  # 每N帧发布一次地图
+
+# ==================== 重力对齐配置 ====================
+gravity_alignment:
+  enabled: true  # 是否启用重力对齐
+  save_interval: 1.0  # 保存图像和位姿的间隔（秒）
+  check_interval: 0.5  # 检查R_align更新的间隔（秒）
