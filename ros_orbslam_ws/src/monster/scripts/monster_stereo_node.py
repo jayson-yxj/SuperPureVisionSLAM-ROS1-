@@ -97,6 +97,9 @@ class MonsterStereoNode:
             },
             'voxel_size': 1.0
         })
+
+        # 尺度缩放因子
+        self.scale_factor = rospy.get_param('~scale_factor', 1.0)
         
         # 相机内参（用于点云生成）
         self.camera_intrinsics = rospy.get_param('~camera_intrinsics', {
@@ -270,6 +273,12 @@ class MonsterStereoNode:
             T_pp = pp.SE3(torch.tensor(translation + quaternion))
             T_pp_inv = pp.Inv(T_pp)  # Twc
             
+            # 位移缩放
+            if self.scale_factor != 1.0:
+                t_scaled = T_pp_inv.translation() * self.scale_factor
+                R = T_pp_inv.rotation()
+                T_pp_inv = pp.SE3(torch.cat([t_scaled, R.tensor()]))
+            
             # 转换为 tensor
             image1 = numpy_to_tensor(left_img)
             image2 = numpy_to_tensor(right_img)
@@ -301,7 +310,7 @@ class MonsterStereoNode:
             }
             
             points, colors = self.point_cloud_generator.generate(
-                depth, left_img, camera_params, T_pp_inv,
+                depth, left_img, camera_params, T_pp_inv, self.scale_factor,
                 max_depth=self.pc_config['filter']['max_depth']
             )
             points_after_generate = len(points)

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- ========================================
+       ROS Navigation Stack 集成启动文件
+       用于视觉 SLAM + 深度建图 + 自主导航
+       ======================================== -->
+  
+  <!-- 参数配置 -->
+  <arg name="enable_rviz" default="true" doc="是否启动 RViz 可视化"/>
+  <arg name="enable_cmd_relay" default="true" doc="是否启动速度命令转发（连接实际机器人时启用）"/>
+  
+  <!-- 1. TF 发布节点 -->
+  <!-- 将 ORB-SLAM3 位姿转换为 TF 树: map -> odom -> base_link -> camera -->
+  <node pkg="robot_navigation" type="tf_publisher_stereo.py" name="tf_publisher" output="screen">
+    <param name="map_frame" value="map"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_link_frame" value="base_link"/>
+    <param name="camera_frame" value="camera_left"/>
+  </node>
+  
+  <!-- 2. move_base 导航节点 -->
+  <include file="$(find robot_navigation)/launch/move_base.launch"/>
+  
+  <!-- 3. 速度命令转发节点（可选） -->
+  <!-- 将 /cmd_vel 转发给实际机器人底盘 -->
+  <node if="$(arg enable_cmd_relay)" 
+        pkg="robot_navigation" 
+        type="cmd_vel_relay.py" 
+        name="cmd_vel_relay" 
+        output="screen">
+    <param name="max_linear_vel" value="0.5"/>
+    <param name="max_angular_vel" value="1.0"/>
+    <param name="enable_safety_check" value="true"/>
+  </node>
+  
+  <!-- 4. RViz 可视化（可选） -->
+  <node if="$(arg enable_rviz)" 
+        pkg="rviz" 
+        type="rviz" 
+        name="rviz" 
+        args="-d $(find robot_navigation)/rviz/navigation.rviz"
+        output="screen"/>
+  
+  <!-- 日志信息 -->
+  <node pkg="rostopic" type="rostopic" name="navigation_info" 
+        args="echo -n 1 /move_base/status" output="screen" launch-prefix="bash -c 'sleep 3; $0 $@' "/>
+  
+</launch>

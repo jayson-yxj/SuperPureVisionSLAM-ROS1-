@@ -36,6 +36,12 @@
 
 using namespace std;
 
+#define ZED_LEFT "/zedm/zed_node/left/image_rect_color"
+#define ZED_RIGHT "/zedm/zed_node/right/image_rect_color"
+
+#define VIDEO_LEFT "/stereo/raw_left"
+#define VIDEO_RIGHT "/stereo/raw_right"
+
 class ImageGrabber
 {
 public:
@@ -123,8 +129,8 @@ int main(int argc, char **argv)
 
     ros::NodeHandle nh;
 
-    message_filters::Subscriber<sensor_msgs::Image> left_sub(nh, "/zedm/zed_node/left/image_rect_color", 1);
-    message_filters::Subscriber<sensor_msgs::Image> right_sub(nh, "/zedm/zed_node/right/image_rect_color", 1);
+    message_filters::Subscriber<sensor_msgs::Image> left_sub(nh, VIDEO_LEFT, 1);
+    message_filters::Subscriber<sensor_msgs::Image> right_sub(nh, VIDEO_RIGHT, 1);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, sensor_msgs::Image> sync_pol;
     message_filters::Synchronizer<sync_pol> sync(sync_pol(10), left_sub,right_sub);
     sync.registerCallback(boost::bind(&ImageGrabber::GrabStereo,&igb,_1,_2));

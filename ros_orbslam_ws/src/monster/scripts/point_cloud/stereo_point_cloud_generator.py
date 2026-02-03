@@ -20,6 +20,7 @@ class StereoPointCloudGenerator:
                  rgb: np.ndarray,
                  camera_params: Dict[str, float],
                  pose: Any,
+                 scale_factor: float = 1.0,
                  max_depth: float = 100.0) -> Tuple[np.ndarray, Optional[np.ndarray]]:
         """
         从深度图生成点云
@@ -46,7 +47,7 @@ class StereoPointCloudGenerator:
         valid_mask = (depth > 0.1) & (depth < max_depth) & np.isfinite(depth)
         
         # 计算3D坐标（相机坐标系）
-        Z = depth[valid_mask] * 5.0  # 深度缩放因子
+        Z = depth[valid_mask] * scale_factor  # 深度缩放因子
         X = (u[valid_mask] - cx) * Z / fx
         Y = (v[valid_mask] - cy) * Z / fy
         

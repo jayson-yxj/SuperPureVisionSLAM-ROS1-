@@ -34,6 +34,9 @@ mixed_precision: false  # 设为 true 可能更快但需要 GPU 支持
 # 显示参数
 display: false  # 是否显示可视化窗口
 
+# 尺度缩放因子 深度以及位移的缩放系数
+scale_factor: 5.0
+
 # ==================== 点云生成配置 ====================
 point_cloud:
   # 过滤参数
@@ -42,7 +45,7 @@ point_cloud:
     # 高度过滤模式：'relative' 或 'absolute'
     height_filter_mode: relative  # 相对模式（基于点云高度范围的百分比）
     # 相对模式参数（百分比，0.0-1.0）
-    height_ratio_range: [0.0, 1.0]  # 保留所有高度的点（0%-100%）
+    height_ratio_range: [0.45, 1.0]  # 保留所有高度的点（0%-100%）
     # 绝对模式参数（米，仅在 height_filter_mode: absolute 时使用）
     # height_range: [-2.0, 3.0]
   
@@ -54,7 +57,7 @@ map:
   # 滑动窗口配置
   sliding_window:
     enabled: true  # 是否启用滑动窗口
-    size: 3  # 窗口大小（帧数）
+    size: 10  # 窗口大小（帧数）
   
   # 最大点数限制（可选，用于累积模式）
   # max_points: 1000000

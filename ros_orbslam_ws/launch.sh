@@ -50,10 +50,9 @@ echo "   - 启动所有节点"
 echo "   - 禁用 RViz"
 echo "   - 禁用 Open3D 可视化"
 echo ""
-echo "3) 调试模式"
+echo "3) 双目模式"
 echo "   - 启动所有节点"
 echo "   - 启用 RViz"
-echo "   - 启用 Open3D 可视化"
 echo ""
 echo "4) 自定义参数"
 echo ""
@@ -63,7 +62,7 @@ read -p "请选择模式 [1-4]: " choice
 
 case $choice in
     1)
-        echo -e "${BLUE}启动标准模式...${NC}"
+        echo -e "${BLUE}启动单目模式...${NC}"
         echo ""
         catkin_make
         source devel/setup.bash
@@ -84,14 +83,12 @@ case $choice in
         ;;
         
     3)
-        echo -e "${BLUE}启动调试模式...${NC}"
-        echo -e "${YELLOW}⚠️  警告: Open3D 可视化会降低性能${NC}"
+        echo -e "${BLUE}启动双目模式...${NC}"
         echo ""
-        roslaunch depth_maping slam_mapping.launch \
-            enable_rviz:=true \
-            enable_visualization:=true \
-            enable_gravity_estimate:=true \
-            sliding_window_size:=3
+        catkin_make
+        source devel/setup.bash
+        ./monster/scripts/gravity_estimate_wrapper.sh &
+        roslaunch monster monster_stereo.launch
         ;;
         
     4)

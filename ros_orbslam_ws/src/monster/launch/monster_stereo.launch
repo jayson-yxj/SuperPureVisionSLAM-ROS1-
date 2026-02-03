@@ -1,22 +1,67 @@
 <?xml version="1.0"?>
 <launch>
-    <!-- Monster 双目深度估计节点 -->
+    <!-- ========================================== -->
+    <!-- Monster 双目深度估计与建图系统 Launch 文件 -->
+    <!-- 说明: 启动 ORB-SLAM3 + Monster（重力估计需手动启动） -->
+    <!-- 适用于真实 ZED 相机硬件 -->
+    <!-- ========================================== -->
     
-    <!-- 配置文件路径 -->
-    <arg name="config_file" default="$(find monster)/config/monster_config.yaml" />
+    <!-- ==================== 全局参数 ==================== -->
     
-    <!-- Monster 深度估计节点 -->
-    <node name="monster_stereo_node" pkg="monster" type="monster_stereo_node.py" output="screen">
-        <!-- 加载配置文件 - 所有参数从配置文件读取 -->
-        <rosparam command="load" file="$(arg config_file)" />
+    <!-- 禁用仿真时间（真实硬件使用系统时间） -->
+    <param name="/use_sim_time" value="false" />
+    
+    <!-- ==================== 参数配置 ==================== -->
+    
+    <!-- ORB-SLAM3 配置 -->
+    <arg name="vocabulary_path" default="$(env HOME)/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/Vocabulary/ORBvoc.txt" />
+    <arg name="config_path" default="$(env HOME)/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/MonoConfig/ZED_Mini.yaml" />
+    
+    <!-- Monster 配置文件 -->
+    <arg name="monster_config" default="$(find monster)/config/monster_config.yaml" />
+    
+    <!-- 可视化选项 -->
+    <arg name="enable_rviz" default="true" />
+    
+    <!-- ==================== 节点启动 ==================== -->
+    
+    <!-- 1. ORB-SLAM3 双目 SLAM -->
+    <node name="orb_slam3_stereo" pkg="orb_slam3_ros" type="Stereo" output="screen" respawn="false"
+          args="$(arg vocabulary_path) $(arg config_path) false">
+        <!-- 话题重映射根据实际情况调整 -->
+        <!-- <remap from="/camera/left/image_raw" to="/zed/left/image_rect_color" /> -->
+        <!-- <remap from="/camera/right/image_raw" to="/zed/right/image_rect_color" /> -->
     </node>
     
-    <!--
-    如果需要临时覆盖参数，使用以下命令：
-    roslaunch monster monster_stereo.launch baseline:=0.0629 focal_length:=730.97
+    <!-- 2. Monster 深度估计与建图节点 -->
+    <node name="monster_stereo_node" pkg="monster" type="monster_stereo_node.py" output="screen" respawn="false">
+        <!-- 加载配置文件 - 所有参数从 monster_config.yaml 读取 -->
+        <rosparam command="load" file="$(arg monster_config)" />
+    </node>
     
-    或者直接修改配置文件：
-    $(find monster)/config/monster_config.yaml
-    -->
+    <!-- 3. RViz 可视化 (可选) - 由 navigation_stereo.launch 启动，这里禁用 -->
+    <!-- <group if="$(arg enable_rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" output="screen" respawn="false"
+              args="-d $(find monster)/rviz/monster_mapping.rviz"
+              launch-prefix="bash -c 'sleep 5; $0 $@' " />
+    </group> -->
+
+    <!-- 6. ros 导航 (包含 RViz) -->
+    <include file="$(find robot_navigation)/launch/navigation_stereo.launch">
+        <arg name="enable_rviz" value="$(arg enable_rviz)" />
+    </include>
+    
+    <!-- ==================== 系统监控 ==================== -->
+    
+    <!-- 监控 ORB-SLAM3 输出频率 -->
+    <node name="slam_monitor" pkg="rostopic" type="rostopic" output="screen"
+          args="hz /orb_slam3/image_pose_stereo" 
+          launch-prefix="bash -c 'sleep 8; $0 $@' " />
+    
+    <!-- 监控点云发布频率 -->
+    <node name="pointcloud_monitor" pkg="rostopic" type="rostopic" output="screen"
+          args="hz /o3d_pointCloud" 
+          launch-prefix="bash -c 'sleep 10; $0 $@' " />
+    
     
 </launch>
