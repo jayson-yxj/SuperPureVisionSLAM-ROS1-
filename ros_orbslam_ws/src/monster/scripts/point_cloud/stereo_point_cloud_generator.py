@@ -47,7 +47,7 @@ class StereoPointCloudGenerator:
         valid_mask = (depth > 0.1) & (depth < max_depth) & np.isfinite(depth)
         
         # 计算3D坐标（相机坐标系）
-        Z = depth[valid_mask] * scale_factor  # 深度缩放因子
+        Z = depth[valid_mask] * 8  # 深度缩放因子
         X = (u[valid_mask] - cx) * Z / fx
         Y = (v[valid_mask] - cy) * Z / fy
         

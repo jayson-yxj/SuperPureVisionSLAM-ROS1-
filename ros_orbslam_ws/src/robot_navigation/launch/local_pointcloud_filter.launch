@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 
+    局部点云过滤器启动文件
+    功能：保留以机器人为中心的正方形范围内的点云
+  -->
+  
+  <!-- 参数配置 -->
+  <arg name="box_size" default="15.0" doc="正方形边长（米），默认10米"/>
+  <arg name="input_topic" default="/o3d_pointCloud" doc="输入点云话题"/>
+  <arg name="output_topic" default="/local_pointcloud" doc="输出点云话题"/>
+  <arg name="robot_frame" default="base_link" doc="机器人坐标系"/>
+  <arg name="update_rate" default="5.0" doc="更新频率（Hz）"/>
+  
+  <!-- 启动局部点云过滤节点 -->
+  <node pkg="robot_navigation" 
+        type="local_pointcloud_filter.py" 
+        name="local_pointcloud_filter" 
+        output="screen">
+    <param name="box_size" value="$(arg box_size)"/>
+    <param name="input_topic" value="$(arg input_topic)"/>
+    <param name="output_topic" value="$(arg output_topic)"/>
+    <param name="robot_frame" value="$(arg robot_frame)"/>
+    <param name="update_rate" value="$(arg update_rate)"/>
+  </node>
+  
+  <!-- 信息输出 -->
+  <node pkg="rostopic" type="rostopic" name="local_pointcloud_info" 
+        args="echo -n 1 $(arg output_topic)/header" 
+        output="screen" 
+        launch-prefix="bash -c 'sleep 3; echo; echo ========== 局部点云过滤器已启动 ==========; echo; echo 📊 配置信息:; echo   过滤范围: $(arg box_size)m × $(arg box_size)m; echo   输入话题: $(arg input_topic); echo   输出话题: $(arg output_topic); echo   机器人坐标系: $(arg robot_frame); echo   更新频率: $(arg update_rate) Hz; echo; echo 💡 使用提示:; echo   在RViz中添加PointCloud2显示; echo   话题选择: $(arg output_topic); echo   可以看到以机器人为中心的局部点云; echo; exit 0'" />
+  
+</launch>

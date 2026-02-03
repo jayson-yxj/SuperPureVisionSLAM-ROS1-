@@ -131,9 +131,11 @@ class TFPublisher:
         rot_cw = R.from_matrix(T_cw[:3, :3])
         
         # 步骤3：坐标系转换 CV -> ROS（修正前进方向）
-        # 原始映射会导致前进方向偏移90°，需要调整轴映射
+        # OpenCV: X右, Y下, Z前（相机光轴）
+        # ROS: X前, Y左, Z上
+        # 正确映射：ROS_X=CV_Z, ROS_Y=-CV_X, ROS_Z=-CV_Y
         T_cv_to_ros = np.array([
-            [1, 0,  0],   # ROS X = -CV X（修正前进方向）
+            [1,  0,  0],   # ROS X = CV X
             [0,  0,  1],   # ROS Y = CV Z
             [0, -1,  0]    # ROS Z = -CV Y
         ])
@@ -206,27 +208,29 @@ class TFPublisher:
         """
         发布 TF: odom -> base_link
         使用 ORB-SLAM3 的位姿（Twc: Camera -> World）
+        额外添加90度yaw旋转，使base_link与轮子滚动方向对齐
         """
         t = TransformStamped()
         t.header.stamp = timestamp
         t.header.frame_id = self.odom_frame
         t.child_frame_id = self.base_link_frame
         
-        # ORB-SLAM3 提供的是相机位姿，需要转换为 base_link
-        # 假设 base_link 与 camera 重合（通过静态 TF 调整）
+        # 位置（直接使用转换后的位置）
         t.transform.translation.x = self.current_pose['position'][0]
         t.transform.translation.y = self.current_pose['position'][1]
         t.transform.translation.z = self.current_pose['position'][2]
-
-        # 测试固定位置
-        # t.transform.translation.x = 0.
-        # t.transform.translation.y = 10.
-        # t.transform.translation.z = 0.
         
-        t.transform.rotation.x = self.current_pose['orientation'][0]
-        t.transform.rotation.y = self.current_pose['orientation'][1]
-        t.transform.rotation.z = self.current_pose['orientation'][2]
-        t.transform.rotation.w = self.current_pose['orientation'][3]
+        # 姿态：在原有姿态基础上，额外添加绕Z轴向左旋转90度（-π/2）
+        # 这样base_link的X轴会指向轮子的滚动方向
+        quat_slam = R.from_quat(self.current_pose['orientation'])  # [x,y,z,w]
+        quat_correction = R.from_euler('z', np.pi/2)  # 绕Z轴向左旋转90度
+        quat_final = quat_slam * quat_correction  # 先SLAM姿态，再旋转90度
+        quat_final_xyzw = quat_final.as_quat()
+        
+        t.transform.rotation.x = quat_final_xyzw[0]
+        t.transform.rotation.y = quat_final_xyzw[1]
+        t.transform.rotation.z = quat_final_xyzw[2]
+        t.transform.rotation.w = quat_final_xyzw[3]
         
         self.tf_broadcaster.sendTransform(t)
     
@@ -243,17 +247,17 @@ class TFPublisher:
         odom.pose.pose.position.x = self.current_pose['position'][0]
         odom.pose.pose.position.y = self.current_pose['position'][1]
         odom.pose.pose.position.z = self.current_pose['position'][2]
-
-        # 测试固定位置
-        # odom.pose.pose.position.x = 0.
-        # odom.pose.pose.position.y = 10.
-        # odom.pose.pose.position.z = 0.
         
-        # 姿态
-        odom.pose.pose.orientation.x = self.current_pose['orientation'][0]
-        odom.pose.pose.orientation.y = self.current_pose['orientation'][1]
-        odom.pose.pose.orientation.z = self.current_pose['orientation'][2]
-        odom.pose.pose.orientation.w = self.current_pose['orientation'][3]
+        # 姿态：与TF保持一致，添加90度yaw旋转
+        quat_slam = R.from_quat(self.current_pose['orientation'])
+        quat_correction = R.from_euler('z', np.pi/2)
+        quat_final = quat_slam * quat_correction
+        quat_final_xyzw = quat_final.as_quat()
+        
+        odom.pose.pose.orientation.x = quat_final_xyzw[0]
+        odom.pose.pose.orientation.y = quat_final_xyzw[1]
+        odom.pose.pose.orientation.z = quat_final_xyzw[2]
+        odom.pose.pose.orientation.w = quat_final_xyzw[3]
         
         # 6×6协方差矩阵展平，顺序：x, y, z, roll, pitch, yaw
         odom.pose.covariance = [

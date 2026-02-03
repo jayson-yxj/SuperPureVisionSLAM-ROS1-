@@ -15,7 +15,7 @@ local_costmap:
   # 局部地图尺寸（机器人周围的小范围）
   width: 6.0                 # 宽度（米）
   height: 6.0                # 高度（米）
-  resolution: 0.5            # 分辨率（米/格）
+  resolution: 0.05           # 分辨率（米/格）- 修正为5cm，提高精度
   
   # 插件配置
   plugins:
@@ -39,5 +39,5 @@ local_costmap:
   # 膨胀层配置
   inflation_layer:
     enabled: true
-    inflation_radius: 4
-    cost_scaling_factor: 10.0
+    inflation_radius: 1.5      # 膨胀半径0.6米 - 与costmap_common_params一致
+    cost_scaling_factor: 3.5   # 代价衰减因子5.0 - 与costmap_common_params一致

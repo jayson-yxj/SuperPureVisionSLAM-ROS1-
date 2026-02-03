@@ -3,16 +3,16 @@
 
 DWAPlannerROS:
   # 机器人配置参数
-  max_vel_x: 0.5              # 最大线速度（米/秒）
-  min_vel_x: 0.0              # 最小线速度（米/秒）- 可以设为负值允许后退
+  max_vel_x: 0.15              # 最大线速度（米/秒）- 提高到0.5
+  min_vel_x: -0.2             # 最小线速度（米/秒）- 允许后退避障
   
   max_vel_y: 0.0              # 最大侧向速度（差速驱动为0）
   min_vel_y: 0.0              # 最小侧向速度
   
-  max_vel_trans: 0.5          # 最大平移速度（米/秒）
-  min_vel_trans: 0.1          # 最小平移速度（米/秒）
+  max_vel_trans: 0.15          # 最大平移速度（米/秒）- 提高到0.5
+  min_vel_trans: 0.05         # 最小平移速度（米/秒）- 降低到0.05
   
-  max_vel_theta: 1.0          # 最大角速度（弧度/秒）
+  max_vel_theta: 0.6          # 最大角速度（弧度/秒）
   min_vel_theta: 0.4          # 最小角速度（弧度/秒）
   
   # 加速度限制
@@ -21,8 +21,8 @@ DWAPlannerROS:
   acc_lim_theta: 3.2          # 角加速度限制（弧度/秒²）
   
   # 目标容差
-  yaw_goal_tolerance: 0.1     # 目标角度容差（弧度）~5.7度
-  xy_goal_tolerance: 0.2      # 目标位置容差（米）
+  yaw_goal_tolerance: 0.5     # 目标角度容差（弧度）~5.7度
+  xy_goal_tolerance: 0.5      # 目标位置容差（米）
   latch_xy_goal_tolerance: false
   
   # DWA 采样参数
@@ -32,10 +32,10 @@ DWAPlannerROS:
   vy_samples: 1               # Y速度采样数（差速驱动为1）
   vtheta_samples: 20          # 角速度采样数
   
-  # 轨迹评分权重
+  # 轨迹评分权重 - 关键修复：大幅提高障碍物权重！
   path_distance_bias: 32.0    # 路径距离权重（越大越倾向跟随全局路径）
-  goal_distance_bias: 24.0    # 目标距离权重（越大越倾向接近目标）
-  occdist_scale: 0.01         # 障碍物距离权重（越大越倾向远离障碍物）
+  goal_distance_bias: 20.0    # 目标距离权重（越大越倾向接近目标）- 略微降低
+  occdist_scale: 1.8          # 障碍物距离权重（越大越倾向远离障碍物）- 提高20倍！
   forward_point_distance: 0.325  # 前向点距离（用于路径跟踪）
   stop_time_buffer: 0.2       # 停止时间缓冲（秒）
   scaling_speed: 0.25         # 缩放速度
