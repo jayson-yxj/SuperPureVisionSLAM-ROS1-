@@ -110,6 +110,13 @@
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-bookstore-world/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-bookstore-world/CMakeFiles/dynamic_reconfigure_generate_messages_eus.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-bookstore-world/CMakeFiles/dynamic_reconfigure_gencfg.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/install/strip.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/install/local.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/install.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/list_install_components.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/rebuild_cache.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/edit_cache.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world/CMakeFiles/test.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-small-house-world/CMakeFiles/install/strip.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-small-house-world/CMakeFiles/install/local.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-small-house-world/CMakeFiles/install.dir

@@ -69,7 +69,7 @@ map:
   
   # 最大点数限制
   max_points: 80000  # 累积模式的最大点数
-  max_history_points: 80000  # FOV感知模式的历史点云最大点数
+  max_history_points: 20000  # FOV感知模式的历史点云最大点数
   
   # 2D地图生成参数
   resolution: 0.1  # 网格分辨率（米/格）

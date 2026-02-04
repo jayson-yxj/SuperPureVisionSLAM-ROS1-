@@ -6,6 +6,7 @@
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
 subdirs("aws-robomaker-bookstore-world")
+subdirs("aws-robomaker-hospital-world")
 subdirs("aws-robomaker-small-house-world")
 subdirs("depth_maping")
 subdirs("monster")

@@ -39,5 +39,5 @@ local_costmap:
   # 膨胀层配置
   inflation_layer:
     enabled: true
-    inflation_radius: 1.5      # 膨胀半径0.6米 - 与costmap_common_params一致
+    inflation_radius: 1.8      # 膨胀半径0.6米 - 与costmap_common_params一致
     cost_scaling_factor: 3.5   # 代价衰减因子5.0 - 与costmap_common_params一致

@@ -440,6 +440,12 @@ aws_robomaker_bookstore_world_BINARY_DIR:STATIC=/home/sunteng/Desktop/HighTorque
 aws_robomaker_bookstore_world_SOURCE_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/aws-robomaker-bookstore-world
 
 //Value Computed by CMake
+aws_robomaker_hospital_world_BINARY_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-hospital-world
+
+//Value Computed by CMake
+aws_robomaker_hospital_world_SOURCE_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/src/aws-robomaker-hospital-world
+
+//Value Computed by CMake
 aws_robomaker_small_house_world_BINARY_DIR:STATIC=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/aws-robomaker-small-house-world
 
 //Value Computed by CMake
@@ -812,7 +818,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

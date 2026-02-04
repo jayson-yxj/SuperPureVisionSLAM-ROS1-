@@ -54,11 +54,19 @@ echo "3) 双目模式"
 echo "   - 启动所有节点"
 echo "   - 启用 RViz"
 echo ""
-echo "4) 双目仿真模式"
+echo "4) 双目仿真环境模式（房间环境）"
+echo "   - 启动所有节点"
+echo "   - 启用 RViz"
+echo "   - 启用 gazebo"
+echo ""
+echo "5) 双目仿真环境模式（书店环境）"
+echo "   - 启动所有节点"
+echo "   - 启用 RViz"
+echo "   - 启用 gazebo"
 echo ""
 echo "0) 退出"
 echo ""
-read -p "请选择模式 [1-4]: " choice
+read -p "请选择模式 [1-5]: " choice
 
 case $choice in
     1)
@@ -83,7 +91,7 @@ case $choice in
         ;;
         
     3)
-        echo -e "${BLUE}启动双目模式...${NC}"
+        echo -e "${BLUE}启动双目真实相机模式...${NC}"
         echo ""
         catkin_make
         source devel/setup.bash
@@ -92,11 +100,19 @@ case $choice in
         ;;
         
     4)
-        echo -e "${BLUE}双目仿真环境模式${NC}"
+        echo -e "${BLUE}双目仿真环境模式（房间环境）${NC}"
         echo ""
         catkin_make
         source devel/setup.bash
         roslaunch aws_robomaker_small_house_world stereo_robot_with_slam.launch
+        ;;
+
+    5)
+        echo -e "${BLUE}双目仿真环境模式（书店环境）${NC}"
+        echo ""
+        catkin_make
+        source devel/setup.bash
+        roslaunch aws_robomaker_bookstore_world stereo_robot_with_slam.launch
         ;;
         
     0)
