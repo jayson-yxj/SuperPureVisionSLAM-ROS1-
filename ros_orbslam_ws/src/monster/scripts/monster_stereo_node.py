@@ -184,7 +184,7 @@ class MonsterStereoNode:
             ImagePoseStereo,
             self.image_callback,
             queue_size=1,
-            buff_size=2**24
+            buff_size=2**25
         )
         
         # 统计信息
@@ -329,9 +329,17 @@ class MonsterStereoNode:
                 )
             points_after_downsample = len(points)
             
-            # 更新地图
+            # 更新地图（传递相机位姿用于FOV感知）
             if len(points) > 0:
-                self.map_builder.update(points, colors)
+                # 构建4x4变换矩阵 Twc
+                if hasattr(T_pp_inv, 'matrix'):
+                    # pypose SE3对象
+                    pose_matrix = T_pp_inv.matrix().cpu().numpy()
+                else:
+                    # 已经是numpy矩阵
+                    pose_matrix = T_pp_inv
+                
+                self.map_builder.update(points, colors, camera_pose=pose_matrix)
             
             # 详细诊断日志（每10帧输出一次）
             if self.frame_count % 10 == 0:
@@ -376,7 +384,14 @@ class MonsterStereoNode:
                             f"推理={inference_time*1000:.1f}ms")
                 rospy.loginfo(f"  当前帧点数: {points_after_downsample}")
                 rospy.loginfo(f"  地图总点数: {len(total_points)}")
-                rospy.loginfo(f"  滑动窗口: {self.map_builder.get_frame_count()}/{self.map_config['sliding_window']['size']} 帧")
+                
+                # 根据模式输出不同的统计信息
+                if hasattr(self.map_builder, 'enable_fov_aware') and self.map_builder.enable_fov_aware:
+                    stats = self.map_builder.get_fov_statistics()
+                    rospy.loginfo(f"  视野内点数: {stats['fov_points']}")
+                    rospy.loginfo(f"  历史点数: {stats['history_points']}")
+                else:
+                    rospy.loginfo(f"  滑动窗口: {self.map_builder.get_frame_count()}/{self.map_config['sliding_window']['size']} 帧")
         
         except Exception as e:
             rospy.logerr(f"图像处理错误: {e}")

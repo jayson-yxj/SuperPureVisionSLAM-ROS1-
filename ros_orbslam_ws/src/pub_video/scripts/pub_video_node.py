@@ -21,6 +21,7 @@ def image_publisher():
             ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
             ros_image.header.stamp = rospy.Time.now()
             ros_image.header.frame_id = "camera"
+            print(f'publishing frame at time {ros_image.header.stamp.to_sec()}')
             pub.publish(ros_image)
             cv2.imshow("Fisheye Camera", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):

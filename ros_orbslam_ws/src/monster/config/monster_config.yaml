@@ -32,7 +32,7 @@ max_disp: 416
 mixed_precision: false  # 设为 true 可能更快但需要 GPU 支持
 
 # 显示参数
-display: false  # 是否显示可视化窗口
+display: true  # 是否显示可视化窗口
 
 # 尺度缩放因子 深度以及位移的缩放系数
 scale_factor: 5.0
@@ -50,23 +50,32 @@ point_cloud:
     # height_range: [-2.0, 3.0]
   
   # 下采样参数
-  voxel_size: 0.1  # 体素大小（米）- 从 1.0 降到 0.05，大幅增加点云密度
+  voxel_size: 0.2  # 体素大小（米）- 从 1.0 降到 0.05，大幅增加点云密度
 
 # ==================== 地图构建配置 ====================
 map:
-  # 滑动窗口配置
+  # FOV感知模式配置
+  fov_aware:
+    enabled: true  # 是否启用FOV感知模式（视野内更新 + 历史保留）
+    horizontal_fov: 80.0  # 水平视场角（度）- ZED Mini典型值
+    vertical_fov: 60.0    # 垂直视场角（度）
+    max_distance: 20.0     # 最大可见距离（米）
+    voxel_grid_size: 0.3  # 体素网格大小（米）- 用于加速FOV判断
+  
+  # 滑动窗口配置（当fov_aware.enabled=false时使用）
   sliding_window:
     enabled: false  # 是否启用滑动窗口
     size: 5  # 窗口大小（帧数）
   
-  # 最大点数限制（可选，用于累积模式）
-  # max_points: 1000000
+  # 最大点数限制
+  max_points: 80000  # 累积模式的最大点数
+  max_history_points: 80000  # FOV感知模式的历史点云最大点数
   
   # 2D地图生成参数
   resolution: 0.1  # 网格分辨率（米/格）
   height_range: [0.65, 0.8]  # 高度范围（百分比或绝对值）
   use_ratio: true  # 是否使用百分比模式
-  occupied_thresh: 1  # 占用阈值（点数）
+  occupied_thresh: 3  # 占用阈值（点数）
 
 # ==================== ROS话题配置 ====================
 ros:

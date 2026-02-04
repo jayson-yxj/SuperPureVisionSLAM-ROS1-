@@ -40,7 +40,7 @@ echo "=========================================="
 echo "  启动选项"
 echo "=========================================="
 echo ""
-echo "1) 标准模式 (推荐)"
+echo "1) 单目模式 "
 echo "   - 启动所有节点和重力估计"
 echo "   - 启用 RViz"
 echo "   - 禁用 Open3D 可视化（性能优化）"
@@ -54,7 +54,7 @@ echo "3) 双目模式"
 echo "   - 启动所有节点"
 echo "   - 启用 RViz"
 echo ""
-echo "4) 自定义参数"
+echo "4) 双目仿真模式"
 echo ""
 echo "0) 退出"
 echo ""
@@ -92,53 +92,11 @@ case $choice in
         ;;
         
     4)
-        echo -e "${BLUE}自定义参数模式${NC}"
+        echo -e "${BLUE}双目仿真环境模式${NC}"
         echo ""
-        
-        # RViz
-        read -p "启用 RViz? [y/n] (默认: y): " rviz_choice
-        rviz_choice=${rviz_choice:-y}
-        if [ "$rviz_choice" = "y" ]; then
-            enable_rviz="true"
-        else
-            enable_rviz="false"
-        fi
-        
-        # Open3D 可视化
-        read -p "启用 Open3D 可视化? [y/n] (默认: n): " vis_choice
-        vis_choice=${vis_choice:-n}
-        if [ "$vis_choice" = "y" ]; then
-            enable_vis="true"
-        else
-            enable_vis="false"
-        fi
-        
-        # 重力估计
-        read -p "启用重力估计? [y/n] (默认: y): " gravity_choice
-        gravity_choice=${gravity_choice:-y}
-        if [ "$gravity_choice" = "y" ]; then
-            enable_gravity="true"
-        else
-            enable_gravity="false"
-        fi
-        
-        # 滑动窗口大小
-        read -p "滑动窗口大小 (默认: 3): " window_size
-        window_size=${window_size:-3}
-        
-        echo ""
-        echo "启动参数:"
-        echo "  - RViz: $enable_rviz"
-        echo "  - Open3D 可视化: $enable_vis"
-        echo "  - 重力估计: $enable_gravity"
-        echo "  - 滑动窗口大小: $window_size"
-        echo ""
-        
-        roslaunch depth_maping slam_mapping.launch \
-            enable_rviz:=$enable_rviz \
-            enable_visualization:=$enable_vis \
-            enable_gravity_estimate:=$enable_gravity \
-            sliding_window_size:=$window_size
+        catkin_make
+        source devel/setup.bash
+        roslaunch aws_robomaker_small_house_world stereo_robot_with_slam.launch
         ;;
         
     0)
