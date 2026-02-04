@@ -1,5 +1,6 @@
-# 纯视觉建图导航系统 ROS 集成
-基于 ORB-SLAM3 的视觉 SLAM 系统，集成深度估计、3D 点云重建和机器人导航功能。
+# 视觉 SLAM 建图导航系统 ROS 集成
+
+基于 ORB-SLAM3 的视觉 SLAM 系统，集成深度估计、3D 点云重建和机器人导航功能。支持单目和双目相机，提供完整的建图导航解决方案。
 =======
 单目基于 ORB-SLAM3 的视觉 SLAM 系统，集成深度估计和 3D 点云重建功能演示：
 <img width="1906" height="1035" alt="image" src="https://github.com/user-attachments/assets/e612218b-7c36-474b-8a05-53a5cef22a38" />
@@ -26,39 +27,51 @@
 
 ## 🎯 项目简介
 
-本项目是一个完整的视觉 SLAM 解决方案，结合了：
+本项目是一个完整的视觉 SLAM 解决方案，支持**单目**和**双目**两种模式，结合了：
 - **ORB-SLAM3**：用于相机位姿估计和特征跟踪
 - **Depth Anything V2**：基于深度学习的单目深度估计
+- **Monster**：混合单目先验和双目立体匹配的深度估计
 - **ROS Noetic**：机器人操作系统集成
 - **Open3D**：3D 点云可视化和处理
 - **Move Base**：机器人导航和路径规划
+- **Gazebo**：机器人仿真环境
 
-系统能够从单目相机输入实时生成稠密的 3D 点云地图，并支持机器人自主导航。
+系统能够从单目或双目相机输入实时生成稠密的 3D 点云地图，并支持机器人自主导航。
 
 ## ✨ 主要特性
 
 ### 核心功能
-- ✅ 单目视觉 SLAM（支持鱼眼相机）
-- ✅ 实时深度估计（Depth Anything V2）
-- ✅ 3D 点云重建和可视化
-- ✅ 2D 占用栅格地图生成
-- ✅ TF 坐标变换发布
-- ✅ 机器人导航集成（Move Base）
+- ✅ **单目视觉 SLAM**（支持鱼眼相机）
+- ✅ **双目视觉 SLAM**（支持标准双目相机）
+- ✅ **实时深度估计**
+  - 单目模式：Depth Anything V2
+  - 双目模式：Monster（混合单目先验 + 立体匹配）
+- ✅ **3D 点云重建和可视化**
+- ✅ **2D 占用栅格地图生成**
+- ✅ **TF 坐标变换发布**
+- ✅ **机器人导航集成**（Move Base）
+- ✅ **Gazebo 仿真支持**
 
 ### 高级特性
-- ✅ 重力对齐（自动估计重力方向）
-- ✅ 并行处理模式（提升30-50%性能）
-- ✅ 滑动窗口点云管理
-- ✅ 自适应高度过滤
-- ✅ 体素下采样优化
-- ✅ 深度图降噪处理
-- ✅ 模块化架构设计
+- ✅ **FOV感知点云管理**（🆕 v1.2.0）
+  - "关注之处必更新，过往之域永留存"
+  - 视野内点云实时更新，不累加
+  - 历史点云永久保留
+  - 体素网格加速（性能提升100倍）
+- ✅ **重力对齐**（自动估计重力方向）
+- ✅ **并行处理模式**（提升30-50%性能）
+- ✅ **滑动窗口点云管理**
+- ✅ **自适应高度过滤**
+- ✅ **体素下采样优化**
+- ✅ **深度图降噪处理**
+- ✅ **模块化架构设计**
 
 ### ROS 集成
 - ✅ 标准 ROS 话题发布（图像、位姿、点云、地图）
 - ✅ TF 树发布（map -> odom -> base_link -> camera）
 - ✅ 里程计消息发布
 - ✅ 支持离线和在线处理
+- ✅ 完整的 Launch 文件配置
 
 ## 💻 系统要求
 
@@ -159,62 +172,24 @@ source ~/.bashrc
 
 ## 🎮 使用方法
 
+### 模式选择
+
+本项目支持两种工作模式：
+
+#### 1. 单目模式（Depth Anything V2）
+适用于单目相机，使用深度学习进行深度估计。
+
+#### 2. 双目模式（Monster）🆕
+适用于双目相机，结合单目先验和立体匹配，提供更高质量的深度估计。
+
+---
+
 ### 快速启动
 
-#### 方法 1：使用启动脚本（推荐）
+**使用启动脚本（推荐）**
 ```bash
 cd ros_orbslam_ws
-./run.sh
-```
-
-#### 方法 2：使用 Launch 文件
-```bash
-# 启动完整系统（SLAM + 深度映射 + 导航）
-roslaunch depth_maping slam_mapping.launch
-
-# 仅启动导航系统
-roslaunch robot_navigation navigation.launch
-```
-
-### 手动启动各个节点
-
-```bash
-# 终端 1：启动 ROS Master
-roscore
-
-# 终端 2：启动深度映射节点
-rosrun depth_maping depth_maping_node.py
-
-# 终端 3：启动 ORB-SLAM3 节点
-rosrun orb_slam3_ros orb_mono ../Vocabulary/ORBvoc.txt ../MonoConfig/Fisheye.yaml
-
-# 终端 4：启动 TF 发布节点
-rosrun robot_navigation tf_publisher.py
-
-# 终端 5（可选）：启动视频发布节点
-rosrun pub_video pub_video_node.py
-
-# 终端 6（可选）：启动导航节点
-roslaunch robot_navigation move_base.launch
-```
-
-### 可视化
-
-```bash
-# 使用 RViz 查看点云和地图
-rviz -d ros_orbslam_ws/src/depth_maping/rviz/slam_mapping.rviz
-
-# 查看 TF 树
-rosrun rqt_tf_tree rqt_tf_tree
-
-# 查看话题列表
-rostopic list
-
-# 查看点云话题
-rostopic echo /o3d_pointCloud
-
-# 查看地图话题
-rostopic echo /projected_map
+./launch.sh
 ```
 
 ### 高级功能
@@ -247,7 +222,7 @@ point_cloud:
 
 ## ⚙️ 配置说明
 
-### 主配置文件
+### 单目模式主配置文件
 `ros_orbslam_ws/src/depth_maping/config/default_config.yaml`
 
 #### 深度估计配置
@@ -293,6 +268,9 @@ pose:
   translation_scale: 18  # 平移向量缩放倍率（与TF发布节点共用）
 ```
 
+### 双目模式主配置文件
+`ros_orbslam_ws/src/monster/config/monster_config.yaml`
+
 ### 相机参数配置
 编辑 `MonoConfig/Fisheye.yaml`：
 ```yaml
@@ -321,6 +299,7 @@ orbslam_depthmaping_ros_2/
 ├── build.sh                    # 自动构建脚本
 ├── CMakeLists.txt             # ORB-SLAM3 主 CMake 配置
 ├── .gitignore                 # Git 忽略文件配置
+├── README.md                  # 项目主文档
 ├── include/                   # ORB-SLAM3 头文件
 ├── src/                       # ORB-SLAM3 源代码
 ├── lib/                       # 编译后的库文件
@@ -329,13 +308,18 @@ orbslam_depthmaping_ros_2/
 │   └── g2o/                 # 图优化库
 ├── Vocabulary/              # ORB 词汇表（需下载）
 ├── MonoConfig/              # 相机配置文件
-│   ├── Fisheye.yaml
-│   ├── turtlebot3.yaml
-│   └── USBCam.yaml
+│   ├── Fisheye.yaml         # 鱼眼相机配置
+│   ├── Gazebo_Stereo.yaml   # Gazebo 双目配置
+│   ├── ZED_Mini.yaml        # ZED Mini 配置
+│   └── USBCam.yaml          # USB 相机配置
 └── ros_orbslam_ws/          # ROS 工作空间
     ├── src/
     │   ├── ORB_SLAM3_ROS/   # ORB-SLAM3 ROS 包装
-    │   ├── depth_maping/    # 深度映射节点
+    │   │   └── src/
+    │   │       ├── ros_mono.cc          # 单目节点
+    │   │       └── ros_stereo.cc        # 双目节点
+    │   │
+    │   ├── depth_maping/    # 单目深度映射节点
     │   │   ├── config/
     │   │   │   └── default_config.yaml      # 主配置文件
     │   │   ├── scripts/
@@ -347,24 +331,55 @@ orbslam_depthmaping_ros_2/
     │   │   │   ├── point_cloud/             # 点云生成模块
     │   │   │   ├── map_builder/             # 地图构建模块
     │   │   │   └── depth_anything_v2/       # 深度估计模型
-    │   │   ├── docs/                        # 文档
     │   │   ├── launch/
     │   │   │   └── slam_mapping.launch
+    │   │   └── rviz/
+    │   │       └── slam_mapping.rviz
+    │   │
+    │   ├── monster/         # 双目深度估计节点 🆕
+    │   │   ├── config/
+    │   │   │   └── monster_config.yaml      # Monster 配置
+    │   │   ├── scripts/
+    │   │   │   ├── monster_stereo_node.py   # 主节点
+    │   │   │   ├── test_fov_aware.py        # FOV 测试脚本
+    │   │   │   ├── point_cloud/             # 点云生成模块
+    │   │   │   ├── map_builder/             # 地图构建模块（含FOV感知）
+    │   │   │   ├── gravity_estimator/       # 重力估计
+    │   │   │   └── core/                    # Monster 核心算法
+    │   │   ├── launch/
+    │   │   │   └── monster_stereo.launch
     │   │   ├── rviz/
-    │   │   │   └── slam_mapping.rviz
-    │   │   └── msg/
-    │   │       └── ImagePose.msg
+    │   │   │   └── monster_mapping.rviz
+    │   │   ├── docs/
+    │   │   │   └── FOV_AWARE_MODE_GUIDE.md  # FOV感知模式指南
+    │   │   └── README.md                    # Monster 文档
+    │   │
     │   ├── robot_navigation/    # 机器人导航节点
     │   │   ├── scripts/
-    │   │   │   └── tf_publisher.py          # TF 发布节点
+    │   │   │   ├── tf_publisher.py          # TF 发布节点
+    │   │   │   └── local_pointcloud_filter.py
     │   │   ├── launch/
     │   │   │   ├── navigation.launch
+    │   │   │   ├── navigation_stereo.launch  # 双目导航
     │   │   │   └── move_base.launch
-    │   │   ├── params/                      # 导航参数
-    │   │   └── docs/
-    │   │       ├── TF_FIX_GUIDE.md
-    │   │       └── USAGE_GUIDE.md
+    │   │   └── params/                      # 导航参数
+    │   │
+    │   ├── aws-robomaker-small-house-world/  # Gazebo 仿真环境 🆕
+    │   │   ├── worlds/
+    │   │   │   └── small_house.world
+    │   │   ├── models/                      # 3D 模型
+    │   │   ├── launch/
+    │   │   │   ├── stereo_robot.launch      # 双目机器人
+    │   │   │   └── stereo_robot_with_slam.launch
+    │   │   ├── examples/
+    │   │   │   └── stereo_robot.urdf.xacro  # 机器人模型
+    │   │   └── README_STEREO_ROBOT.md       # 仿真指南
+    │   │
     │   └── pub_video/           # 视频发布节点
+    │       └── scripts/
+    │           ├── pub_video_node.py        # 单目视频发布
+    │           └── pub_video_node_stereo.py # 双目视频发布
+    │
     ├── run.sh                   # 启动脚本
     └── launch.sh                # Launch 文件启动脚本
 ```
@@ -436,6 +451,30 @@ rostopic echo /orb_slam3/image_pose
 
 ## 📝 更新日志
 
+### v1.2.0 (2026-02-04) 🆕
+- ✨ **新增 Monster 双目深度估计系统**
+  - 混合单目先验和双目立体匹配
+  - 支持实时深度估计和点云生成
+  - 集成重力对齐功能
+- ✨ **新增 FOV感知点云管理模式**
+  - "关注之处必更新，过往之域永留存"哲学
+  - 视野内点云实时更新，不累加
+  - 历史点云永久保留
+  - 体素网格加速FOV判断（性能提升100倍）
+  - 可配置FOV参数（水平/垂直视场角、最大距离）
+  - 历史点云数量限制（默认10万点）
+- ✨ **新增 Gazebo 仿真支持**
+  - 双目视觉机器人模型
+  - 小房子仿真环境
+  - 完整的 SLAM + 导航集成
+- 📝 **新增详细文档**
+  - FOV感知模式使用指南
+  - Monster 系统文档
+  - 双目机器人仿真指南
+- 🧪 **新增测试脚本**
+  - FOV感知模式单元测试
+  - 自动化验证流程
+
 ### v1.1.0 (2026-01-22)
 - 🐛 **修复点云范围限制bug**：深度过滤现在基于相机坐标系而非世界坐标系
 - 🐛 **修复TF坐标变换bug**：正确处理 Twc 到 Tcw 的逆变换
@@ -498,11 +537,38 @@ rostopic echo /orb_slam3/image_pose
 
 ## 📚 相关资源
 
+### 论文
 - [ORB-SLAM3 论文](https://arxiv.org/abs/2007.11898)
 - [Depth Anything V2 论文](https://arxiv.org/abs/2406.09414)
+- [MonSter 论文](https://arxiv.org/abs/xxxx.xxxxx)
+
+### 文档
 - [ROS Noetic 文档](http://wiki.ros.org/noetic)
 - [Open3D 文档](http://www.open3d.org/docs/)
+- [Gazebo 文档](http://gazebosim.org/tutorials)
+
+### 项目内文档
+- [Monster 系统文档](ros_orbslam_ws/src/monster/README.md)
+- [FOV感知模式指南](ros_orbslam_ws/src/monster/docs/FOV_AWARE_MODE_GUIDE.md)
+- [双目机器人仿真指南](ros_orbslam_ws/src/aws-robomaker-small-house-world/README_STEREO_ROBOT.md)
+- [TF 修复指南](ros_orbslam_ws/src/robot_navigation/docs/TF_FIX_GUIDE.md)
 
 ---
 
 ⭐ 如果这个项目对你有帮助，请给个 Star！
+
+## 🌟 项目亮点
+
+### FOV感知点云管理 🆕
+本项目独创的"关注之处必更新，过往之域永留存"点云管理哲学，解决了传统SLAM系统中点云无限累积导致的性能问题。通过智能的视野判断和历史管理，实现了：
+- ✅ 视野内点云实时更新，避免重复累积
+- ✅ 历史点云永久保留，形成完整地图
+- ✅ 性能优化，内存可控
+- ✅ 适用于长时间运行的机器人系统
+
+### 双模式支持
+- **单目模式**：适用于资源受限场景，使用深度学习估计深度
+- **双目模式**：提供更高质量的深度估计，结合单目先验和立体匹配
+
+### 完整的仿真环境
+提供 Gazebo 仿真环境，无需真实硬件即可测试完整系统。
