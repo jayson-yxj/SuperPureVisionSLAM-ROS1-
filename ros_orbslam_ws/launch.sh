@@ -111,6 +111,7 @@ case $choice in
         source devel/setup.bash
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_small_house_world stereo_robot_with_slam.launch
+        pkill -9 python
         ;;
 
     5)
@@ -120,6 +121,7 @@ case $choice in
         source devel/setup.bash
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_bookstore_world stereo_robot_with_slam.launch
+        pkill -9 python
         ;;
 
     6)
@@ -129,6 +131,7 @@ case $choice in
         source devel/setup.bash
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_hospital_world stereo_robot_with_slam.launch
+        pkill -9 python
         ;;
         
     0)
