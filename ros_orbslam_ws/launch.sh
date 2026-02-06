@@ -64,9 +64,14 @@ echo "   - 启动所有节点"
 echo "   - 启用 RViz"
 echo "   - 启用 gazebo"
 echo ""
+echo "6) 双目仿真环境模式（医院环境）"
+echo "   - 启动所有节点"
+echo "   - 启用 RViz"
+echo "   - 启用 gazebo"
+echo ""
 echo "0) 退出"
 echo ""
-read -p "请选择模式 [1-5]: " choice
+read -p "请选择模式 [1-6]: " choice
 
 case $choice in
     1)
@@ -95,7 +100,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
-        ./monster/scripts/gravity_estimate_wrapper.sh &
+        ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch monster monster_stereo.launch
         ;;
         
@@ -104,6 +109,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_small_house_world stereo_robot_with_slam.launch
         ;;
 
@@ -112,7 +118,17 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_bookstore_world stereo_robot_with_slam.launch
+        ;;
+
+    6)
+        echo -e "${BLUE}双目仿真环境模式（医院环境）${NC}"
+        echo ""
+        catkin_make
+        source devel/setup.bash
+        ./src/monster/scripts/gravity_estimate_wrapper.sh &
+        roslaunch aws_robomaker_hospital_world stereo_robot_with_slam.launch
         ;;
         
     0)
