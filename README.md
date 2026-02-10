@@ -9,6 +9,7 @@
 
 双目基于 ORB-SLAM3 的视觉 SLAM 系统，集成深度估计和 3D 点云重建功能演示：
 <img width="1318" height="580" alt="image" src="https://github.com/user-attachments/assets/eb8f4949-9aff-4b76-a282-0f4192bd6114" />
+<img width="1423" height="789" alt="image" src="https://github.com/user-attachments/assets/1d392279-53a6-43c0-83e8-eebd23467222" />
 
 ## 📋 目录
 
