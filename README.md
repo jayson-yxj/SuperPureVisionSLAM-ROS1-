@@ -43,6 +43,10 @@
 ### 核心功能
 - ✅ **单目视觉 SLAM**（支持鱼眼相机）
 - ✅ **双目视觉 SLAM**（支持标准双目相机）
+- ✅ **动态物体过滤**（🆕 v1.3.0）
+  - YOLOv26-seg 实时分割
+  - 像素级动态区域过滤
+  - 提升动态场景下的SLAM精度
 - ✅ **实时深度估计**
   - 单目模式：Depth Anything V2
   - 双目模式：Monster（混合单目先验 + 立体匹配）
@@ -121,6 +125,7 @@ pip install pypose
 pip install opencv-python
 pip install numpy scipy matplotlib
 pip install pyyaml
+pip install ultralytics onnx  # 用于动态物体分割
 ```
 
 ### 深度估计模型
@@ -316,8 +321,21 @@ orbslam_depthmaping_ros_2/
     ├── src/
     │   ├── ORB_SLAM3_ROS/   # ORB-SLAM3 ROS 包装
     │   │   └── src/
-    │   │       ├── ros_mono.cc          # 单目节点
-    │   │       └── ros_stereo.cc        # 双目节点
+    │   │       ├── ros_mono.cc              # 单目节点
+    │   │       ├── ros_stereo.cc            # 双目节点
+    │   │       └── ros_stereo_with_mask.cc  # 双目节点(带动态过滤) 🆕
+    │   │
+    │   ├── segmentation/    # 动态物体分割节点 🆕
+    │   │   ├── config/
+    │   │   ├── scripts/
+    │   │   │   ├── dynamic_segmentor_node.py  # 分割节点
+    │   │   │   ├── demo.py                    # 可视化demo
+    │   │   │   └── export_onnx.py             # ONNX导出
+    │   │   ├── launch/
+    │   │   │   └── dynamic_segmentor.launch
+    │   │   ├── checkpoints/
+    │   │   │   └── yolo26n-seg.pt             # YOLOv26模型
+    │   │   └── README.md                      # 分割系统文档
     │   │
     │   ├── depth_maping/    # 单目深度映射节点
     │   │   ├── config/
@@ -375,10 +393,20 @@ orbslam_depthmaping_ros_2/
     │   │   │   └── stereo_robot.urdf.xacro  # 机器人模型
     │   │   └── README_STEREO_ROBOT.md       # 仿真指南
     │   │
-    │   └── pub_video/           # 视频发布节点
-    │       └── scripts/
-    │           ├── pub_video_node.py        # 单目视频发布
-    │           └── pub_video_node_stereo.py # 双目视频发布
+    │   ├── pub_video/           # 视频发布节点
+    │   │   └── scripts/
+    │   │       ├── pub_video_node.py        # 单目视频发布
+    │   │       └── pub_video_node_stereo.py # 双目视频发布
+    │   │
+    │   └── aws-robomaker-hospital-world/  # Gazebo 医院环境 🆕
+    │       ├── worlds/
+    │       │   └── hospital.world
+    │       ├── models/                    # 3D 模型
+    │       ├── launch/
+    │       │   ├── stereo_robot.launch
+    │       │   └── stereo_robot_with_slam.launch  # 集成动态过滤
+    │       └── examples/
+    │           └── stereo_robot.urdf.xacro
     │
     ├── run.sh                   # 启动脚本
     └── launch.sh                # Launch 文件启动脚本
@@ -451,7 +479,27 @@ rostopic echo /orb_slam3/image_pose
 
 ## 📝 更新日志
 
-### v1.2.0 (2026-02-04) 🆕
+### v1.3.0 (2026-02-10) 🆕
+- ✨ **新增动态物体分割系统**
+  - YOLOv26-seg 实时实例分割
+  - 像素级动态区域过滤（人、车辆、动物等）
+  - 支持分割掩码和边界框两种模式
+  - ROS节点架构，易于集成和调试
+  - 实时性能监控（FPS、推理时间、动态占比）
+- ✨ **集成到ORB-SLAM3**
+  - 新增 `ros_stereo_with_mask.cc` 节点
+  - 订阅动态掩码并应用到图像
+  - 提升动态场景下的SLAM精度和建图质量
+- ✨ **完整的Launch文件集成**
+  - 支持一键启动完整系统
+  - 可配置掩码模式（segmentation/bbox）
+  - 可配置置信度阈值和启用状态
+- 📝 **新增详细文档**
+  - 动态分割系统使用指南
+  - 性能优化建议
+  - 故障排除指南
+
+### v1.2.0 (2026-02-04)
 - ✨ **新增 Monster 双目深度估计系统**
   - 混合单目先验和双目立体匹配
   - 支持实时深度估计和点云生成
@@ -548,6 +596,7 @@ rostopic echo /orb_slam3/image_pose
 - [Gazebo 文档](http://gazebosim.org/tutorials)
 
 ### 项目内文档
+- [动态物体分割系统文档](ros_orbslam_ws/src/segmentation/README.md) 🆕
 - [Monster 系统文档](ros_orbslam_ws/src/monster/README.md)
 - [FOV感知模式指南](ros_orbslam_ws/src/monster/docs/FOV_AWARE_MODE_GUIDE.md)
 - [双目机器人仿真指南](ros_orbslam_ws/src/aws-robomaker-small-house-world/README_STEREO_ROBOT.md)
@@ -559,7 +608,15 @@ rostopic echo /orb_slam3/image_pose
 
 ## 🌟 项目亮点
 
-### FOV感知点云管理 🆕
+### 动态物体过滤 🆕
+针对动态场景下SLAM精度下降的问题，本项目集成了YOLOv26-seg实时分割系统：
+- ✅ 像素级精确过滤动态物体（人、车辆、动物等）
+- ✅ 避免动态特征点干扰SLAM跟踪
+- ✅ 提升建图质量和定位精度
+- ✅ 支持GPU加速，实时性能优异（30-150 FPS）
+- ✅ 灵活配置，支持分割掩码和边界框两种模式
+
+### FOV感知点云管理
 本项目独创的"关注之处必更新，过往之域永留存"点云管理哲学，解决了传统SLAM系统中点云无限累积导致的性能问题。通过智能的视野判断和历史管理，实现了：
 - ✅ 视野内点云实时更新，避免重复累积
 - ✅ 历史点云永久保留，形成完整地图

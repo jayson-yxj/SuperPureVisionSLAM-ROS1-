@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 参数定义 -->
+    <arg name="model_path" default="$(find segmentation)/checkpoints/yolo26n-seg.pt"/>
+    <arg name="conf_threshold" default="0.45"/>
+    <arg name="enabled" default="true"/>
+    <arg name="mask_mode" default="segmentation" doc="Mask generation mode: 'segmentation' (precise) or 'bbox' (fast)"/>
+    <arg name="input_topic" default="/stereo/raw_left"/>
+    <arg name="mask_topic" default="/dynamic_mask"/>
+    <arg name="mask_vis_topic" default="/dynamic_mask_vis"/>
+    
+    <!-- 动态物体分割节点 -->
+    <node name="dynamic_segmentor" pkg="segmentation" type="dynamic_segmentor_node.py" output="screen">
+        <!-- 传递参数 -->
+        <param name="model_path" value="$(arg model_path)" />
+        <param name="conf_threshold" value="$(arg conf_threshold)" />
+        <param name="enabled" value="$(arg enabled)" />
+        <param name="mask_mode" value="$(arg mask_mode)" />
+        
+        <!-- 话题重映射 -->
+        <remap from="/stereo/raw_left" to="$(arg input_topic)" />
+        <remap from="/dynamic_mask" to="$(arg mask_topic)" />
+        <remap from="/dynamic_mask_vis" to="$(arg mask_vis_topic)" />
+    </node>
+</launch>

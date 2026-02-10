@@ -170,6 +170,7 @@
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/install/strip.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/list_install_components.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/test.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/rebuild_cache.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/edit_cache.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir
@@ -195,6 +196,13 @@
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/pub_video/CMakeFiles/rebuild_cache.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/pub_video/CMakeFiles/edit_cache.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/pub_video/CMakeFiles/test.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/install/strip.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/install/local.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/install.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/list_install_components.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/rebuild_cache.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/edit_cache.dir
+/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/segmentation/CMakeFiles/test.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/robot_navigation/CMakeFiles/install/strip.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/robot_navigation/CMakeFiles/install/local.dir
 /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/robot_navigation/CMakeFiles/install.dir

@@ -93,3 +93,12 @@ target_link_libraries(Stereo
 ${LIBS}
 ${catkin_LIBRARIES}
 )
+
+add_executable(Stereo_mask src/ros_stereo_with_mask.cc)
+
+add_dependencies(Stereo_mask ${PROJECT_NAME}_generate_messages_cpp)
+
+target_link_libraries(Stereo_mask
+${LIBS}
+${catkin_LIBRARIES}
+)

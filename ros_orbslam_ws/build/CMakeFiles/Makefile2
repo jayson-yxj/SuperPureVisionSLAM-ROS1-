@@ -61,6 +61,7 @@ all: depth_maping/all
 all: monster/all
 all: ORB_SLAM3_ROS/all
 all: pub_video/all
+all: segmentation/all
 all: robot_navigation/all
 
 .PHONY : all
@@ -74,6 +75,7 @@ preinstall: depth_maping/preinstall
 preinstall: monster/preinstall
 preinstall: ORB_SLAM3_ROS/preinstall
 preinstall: pub_video/preinstall
+preinstall: segmentation/preinstall
 preinstall: robot_navigation/preinstall
 
 .PHONY : preinstall
@@ -92,6 +94,7 @@ clean: depth_maping/clean
 clean: monster/clean
 clean: ORB_SLAM3_ROS/clean
 clean: pub_video/clean
+clean: segmentation/clean
 clean: robot_navigation/clean
 
 .PHONY : clean
@@ -100,6 +103,7 @@ clean: robot_navigation/clean
 # Directory level rules for directory ORB_SLAM3_ROS
 
 # Recursive "all" directory target.
+ORB_SLAM3_ROS/all: ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/all
 ORB_SLAM3_ROS/all: ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir/all
 ORB_SLAM3_ROS/all: ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/all
 ORB_SLAM3_ROS/all: ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/all
@@ -112,6 +116,7 @@ ORB_SLAM3_ROS/preinstall:
 .PHONY : ORB_SLAM3_ROS/preinstall
 
 # Recursive "clean" directory target.
+ORB_SLAM3_ROS/clean: ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/clean
 ORB_SLAM3_ROS/clean: ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir/clean
 ORB_SLAM3_ROS/clean: ORB_SLAM3_ROS/CMakeFiles/_orb_slam3_ros_generate_messages_check_deps_ImagePose.dir/clean
 ORB_SLAM3_ROS/clean: ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_gencpp.dir/clean
@@ -428,6 +433,24 @@ robot_navigation/clean: robot_navigation/CMakeFiles/costmap_2d_generate_messages
 .PHONY : robot_navigation/clean
 
 #=============================================================================
+# Directory level rules for directory segmentation
+
+# Recursive "all" directory target.
+segmentation/all:
+
+.PHONY : segmentation/all
+
+# Recursive "preinstall" directory target.
+segmentation/preinstall:
+
+.PHONY : segmentation/preinstall
+
+# Recursive "clean" directory target.
+segmentation/clean:
+
+.PHONY : segmentation/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
 
 # All Build rule for target.
@@ -570,7 +593,7 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googlemock/CMakeFiles/gmoc
 gtest/googlemock/CMakeFiles/gmock_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock_main.dir/build.make gtest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=12,13 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=14,15 "Built target gmock_main"
 .PHONY : gtest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -597,7 +620,7 @@ gtest/googlemock/CMakeFiles/gmock_main.dir/clean:
 gtest/googlemock/CMakeFiles/gmock.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) -f gtest/googlemock/CMakeFiles/gmock.dir/build.make gtest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=10,11 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=12,13 "Built target gmock"
 .PHONY : gtest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -624,7 +647,7 @@ gtest/googlemock/CMakeFiles/gmock.dir/clean:
 gtest/googletest/CMakeFiles/gtest_main.dir/all: gtest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest_main.dir/build.make gtest/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=16,17 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=18,19 "Built target gtest_main"
 .PHONY : gtest/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -651,7 +674,7 @@ gtest/googletest/CMakeFiles/gtest_main.dir/clean:
 gtest/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=14,15 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=16,17 "Built target gtest"
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2602,7 +2625,7 @@ depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/all: aws-robomake
 depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/all: depth_maping/CMakeFiles/_depth_maping_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/depend
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=4,5 "Built target depth_maping_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=6,7 "Built target depth_maping_generate_messages_eus"
 .PHONY : depth_maping/CMakeFiles/depth_maping_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2659,7 +2682,7 @@ depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/all: aws-robomake
 depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/all: depth_maping/CMakeFiles/_depth_maping_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/depend
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=3 "Built target depth_maping_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=5 "Built target depth_maping_generate_messages_cpp"
 .PHONY : depth_maping/CMakeFiles/depth_maping_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2689,7 +2712,7 @@ depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/all: aws-robomak
 depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/all: depth_maping/CMakeFiles/_depth_maping_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/depend
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=6 "Built target depth_maping_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=8 "Built target depth_maping_generate_messages_lisp"
 .PHONY : depth_maping/CMakeFiles/depth_maping_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2719,7 +2742,7 @@ depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/all: aws-robom
 depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/all: depth_maping/CMakeFiles/_depth_maping_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/depend
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=7 "Built target depth_maping_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=9 "Built target depth_maping_generate_messages_nodejs"
 .PHONY : depth_maping/CMakeFiles/depth_maping_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2749,7 +2772,7 @@ depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/all: aws-robomaker
 depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/all: depth_maping/CMakeFiles/_depth_maping_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/depend
 	$(MAKE) -f depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/build.make depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=8,9 "Built target depth_maping_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=10,11 "Built target depth_maping_generate_messages_py"
 .PHONY : depth_maping/CMakeFiles/depth_maping_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2860,7 +2883,7 @@ monster/CMakeFiles/monster_generate_messages_py.dir/all: aws-robomaker-bookstore
 monster/CMakeFiles/monster_generate_messages_py.dir/all: monster/CMakeFiles/_monster_generate_messages_check_deps_ImagePoseStereo.dir/all
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_py.dir/build.make monster/CMakeFiles/monster_generate_messages_py.dir/depend
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_py.dir/build.make monster/CMakeFiles/monster_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=23,24 "Built target monster_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=25,26 "Built target monster_generate_messages_py"
 .PHONY : monster/CMakeFiles/monster_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2917,7 +2940,7 @@ monster/CMakeFiles/monster_generate_messages_nodejs.dir/all: aws-robomaker-books
 monster/CMakeFiles/monster_generate_messages_nodejs.dir/all: monster/CMakeFiles/_monster_generate_messages_check_deps_ImagePoseStereo.dir/all
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_nodejs.dir/build.make monster/CMakeFiles/monster_generate_messages_nodejs.dir/depend
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_nodejs.dir/build.make monster/CMakeFiles/monster_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=22 "Built target monster_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=24 "Built target monster_generate_messages_nodejs"
 .PHONY : monster/CMakeFiles/monster_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3109,7 +3132,7 @@ monster/CMakeFiles/monster_generate_messages_lisp.dir/all: aws-robomaker-booksto
 monster/CMakeFiles/monster_generate_messages_lisp.dir/all: monster/CMakeFiles/_monster_generate_messages_check_deps_ImagePoseStereo.dir/all
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_lisp.dir/build.make monster/CMakeFiles/monster_generate_messages_lisp.dir/depend
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_lisp.dir/build.make monster/CMakeFiles/monster_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=21 "Built target monster_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=23 "Built target monster_generate_messages_lisp"
 .PHONY : monster/CMakeFiles/monster_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3224,7 +3247,7 @@ monster/CMakeFiles/monster_generate_messages_cpp.dir/all: aws-robomaker-bookstor
 monster/CMakeFiles/monster_generate_messages_cpp.dir/all: monster/CMakeFiles/_monster_generate_messages_check_deps_ImagePoseStereo.dir/all
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_cpp.dir/build.make monster/CMakeFiles/monster_generate_messages_cpp.dir/depend
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_cpp.dir/build.make monster/CMakeFiles/monster_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=18 "Built target monster_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=20 "Built target monster_generate_messages_cpp"
 .PHONY : monster/CMakeFiles/monster_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3254,7 +3277,7 @@ monster/CMakeFiles/monster_generate_messages_eus.dir/all: aws-robomaker-bookstor
 monster/CMakeFiles/monster_generate_messages_eus.dir/all: monster/CMakeFiles/_monster_generate_messages_check_deps_ImagePoseStereo.dir/all
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_eus.dir/build.make monster/CMakeFiles/monster_generate_messages_eus.dir/depend
 	$(MAKE) -f monster/CMakeFiles/monster_generate_messages_eus.dir/build.make monster/CMakeFiles/monster_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=19,20 "Built target monster_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=21,22 "Built target monster_generate_messages_eus"
 .PHONY : monster/CMakeFiles/monster_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3327,6 +3350,33 @@ monster_genlisp: monster/CMakeFiles/monster_genlisp.dir/rule
 monster/CMakeFiles/monster_genlisp.dir/clean:
 	$(MAKE) -f monster/CMakeFiles/monster_genlisp.dir/build.make monster/CMakeFiles/monster_genlisp.dir/clean
 .PHONY : monster/CMakeFiles/monster_genlisp.dir/clean
+
+#=============================================================================
+# Target rules for target ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir
+
+# All Build rule for target.
+ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/all: ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/all
+	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/depend
+	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=3,4 "Built target Stereo_mask"
+.PHONY : ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/all
+
+# Build rule for subdir invocation for target.
+ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles 0
+.PHONY : ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule
+
+# Convenience name for target.
+Stereo_mask: ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule
+
+.PHONY : Stereo_mask
+
+# clean rule for target.
+ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/clean:
+	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/clean
+.PHONY : ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/clean
 
 #=============================================================================
 # Target rules for target ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir
@@ -3423,7 +3473,7 @@ ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/all: aws-roboma
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/all: ORB_SLAM3_ROS/CMakeFiles/_orb_slam3_ros_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/depend
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=28,29 "Built target orb_slam3_ros_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=30,31 "Built target orb_slam3_ros_generate_messages_eus"
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3480,7 +3530,7 @@ ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/all: aws-roboma
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/all: ORB_SLAM3_ROS/CMakeFiles/_orb_slam3_ros_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/depend
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=27 "Built target orb_slam3_ros_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=29 "Built target orb_slam3_ros_generate_messages_cpp"
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3510,7 +3560,7 @@ ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/all: aws-robom
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/all: ORB_SLAM3_ROS/CMakeFiles/_orb_slam3_ros_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/depend
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=30 "Built target orb_slam3_ros_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=32 "Built target orb_slam3_ros_generate_messages_lisp"
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3540,7 +3590,7 @@ ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/all: aws-rob
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/all: ORB_SLAM3_ROS/CMakeFiles/_orb_slam3_ros_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/depend
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=31 "Built target orb_slam3_ros_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=33 "Built target orb_slam3_ros_generate_messages_nodejs"
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3678,7 +3728,7 @@ ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/all: aws-robomak
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/all: ORB_SLAM3_ROS/CMakeFiles/_orb_slam3_ros_generate_messages_check_deps_ImagePose.dir/all
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/depend
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=32,33 "Built target orb_slam3_ros_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=34,35 "Built target orb_slam3_ros_generate_messages_py"
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3705,7 +3755,7 @@ ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_py.dir/clean:
 ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/all: ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages_cpp.dir/all
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/depend
 	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/build.make ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=25,26 "Built target orb_mono"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build/CMakeFiles --progress-num=27,28 "Built target orb_mono"
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_mono.dir/all
 
 # Build rule for subdir invocation for target.

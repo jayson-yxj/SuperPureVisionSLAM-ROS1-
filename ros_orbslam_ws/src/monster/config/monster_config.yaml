@@ -64,7 +64,7 @@ map:
     
     # TSDF融合模式配置
     tsdf_fusion:
-      enabled: true  # 是否启用TSDF融合（视野内加权融合 + 视野外保留）
+      enabled: false  # 是否启用TSDF融合（视野内加权融合 + 视野外保留）
       max_weight: 10.0  # 最大累积权重
       truncation_distance: 0.6  # TSDF截断距离（米）
       
@@ -72,7 +72,7 @@ map:
       weight_params:
         # 1. 边缘权重：中心权重高，边缘权重低
         edge_weight:
-          enabled: false
+          enabled: true
           sigma: 0.75  # 高斯衰减参数，越小衰减越快
         
         # 2. 距离权重：
@@ -85,7 +85,7 @@ map:
         
         # 3. 角度权重：正面观测权重高，侧面观测权重低
         angle_weight:
-          enabled: false
+          enabled: true
           max_angle: 60.0  # 最大有效角度（度）
           falloff_power: 2.0  # 衰减指数，越大衰减越快
   

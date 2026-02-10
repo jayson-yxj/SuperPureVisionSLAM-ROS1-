@@ -79,6 +79,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        rosparam set use_sim_time false # 确保使用系统时间
         roslaunch depth_maping slam_mapping.launch \
             enable_rviz:=false \
             enable_visualization:=false \
@@ -100,6 +101,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        rosparam set use_sim_time false # 确保使用系统时间
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch monster monster_stereo.launch
         ;;
@@ -109,6 +111,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        rosparam set use_sim_time true # 仿真环境使用仿真时间
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_small_house_world stereo_robot_with_slam.launch
         pkill -9 python
@@ -119,6 +122,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        rosparam set use_sim_time true # 仿真环境使用仿真时间
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_bookstore_world stereo_robot_with_slam.launch
         pkill -9 python
@@ -129,6 +133,7 @@ case $choice in
         echo ""
         catkin_make
         source devel/setup.bash
+        rosparam set use_sim_time true # 仿真环境使用仿真时间
         ./src/monster/scripts/gravity_estimate_wrapper.sh &
         roslaunch aws_robomaker_hospital_world stereo_robot_with_slam.launch
         pkill -9 python

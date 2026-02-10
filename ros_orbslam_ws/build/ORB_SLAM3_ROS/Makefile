@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule
+.PHONY : ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule
+
+# Convenience name for target.
+Stereo_mask: ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/rule
+
+.PHONY : Stereo_mask
+
+# fast build rule for target.
+Stereo_mask/fast:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build
+.PHONY : Stereo_mask/fast
+
+# Convenience name for target.
 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir/rule:
 	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir/rule
 .PHONY : ORB_SLAM3_ROS/CMakeFiles/orb_slam3_ros_generate_messages.dir/rule
@@ -431,6 +446,33 @@ src/ros_stereo.cc.s:
 	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo.dir/src/ros_stereo.cc.s
 .PHONY : src/ros_stereo.cc.s
 
+src/ros_stereo_with_mask.o: src/ros_stereo_with_mask.cc.o
+
+.PHONY : src/ros_stereo_with_mask.o
+
+# target to build an object file
+src/ros_stereo_with_mask.cc.o:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/src/ros_stereo_with_mask.cc.o
+.PHONY : src/ros_stereo_with_mask.cc.o
+
+src/ros_stereo_with_mask.i: src/ros_stereo_with_mask.cc.i
+
+.PHONY : src/ros_stereo_with_mask.i
+
+# target to preprocess a source file
+src/ros_stereo_with_mask.cc.i:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/src/ros_stereo_with_mask.cc.i
+.PHONY : src/ros_stereo_with_mask.cc.i
+
+src/ros_stereo_with_mask.s: src/ros_stereo_with_mask.cc.s
+
+.PHONY : src/ros_stereo_with_mask.s
+
+# target to generate assembly for a file
+src/ros_stereo_with_mask.cc.s:
+	cd /home/sunteng/Desktop/HighTorque_vision/orbslam_depthmaping_ros_2/ros_orbslam_ws/build && $(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/src/ros_stereo_with_mask.cc.s
+.PHONY : src/ros_stereo_with_mask.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -440,6 +482,7 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... test"
+	@echo "... Stereo_mask"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... orb_slam3_ros_generate_messages"
@@ -464,6 +507,9 @@ help:
 	@echo "... src/ros_stereo.o"
 	@echo "... src/ros_stereo.i"
 	@echo "... src/ros_stereo.s"
+	@echo "... src/ros_stereo_with_mask.o"
+	@echo "... src/ros_stereo_with_mask.i"
+	@echo "... src/ros_stereo_with_mask.s"
 .PHONY : help
 
 

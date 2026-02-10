@@ -1546,6 +1546,19 @@ monster_genlisp/fast:
 .PHONY : monster_genlisp/fast
 
 #=============================================================================
+# Target rules for targets named Stereo_mask
+
+# Build rule for target.
+Stereo_mask: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Stereo_mask
+.PHONY : Stereo_mask
+
+# fast build rule for target.
+Stereo_mask/fast:
+	$(MAKE) -f ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build.make ORB_SLAM3_ROS/CMakeFiles/Stereo_mask.dir/build
+.PHONY : Stereo_mask/fast
+
+#=============================================================================
 # Target rules for targets named orb_slam3_ros_generate_messages
 
 # Build rule for target.
@@ -2132,6 +2145,7 @@ help:
 	@echo "... monster_generate_messages_eus"
 	@echo "... monster_gencpp"
 	@echo "... monster_genlisp"
+	@echo "... Stereo_mask"
 	@echo "... orb_slam3_ros_generate_messages"
 	@echo "... _orb_slam3_ros_generate_messages_check_deps_ImagePose"
 	@echo "... orb_slam3_ros_gencpp"

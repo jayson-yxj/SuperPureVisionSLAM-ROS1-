@@ -10,3 +10,6 @@ rosrun orb_slam3_ros orb_mono ../Vocabulary/ORBvoc.txt ../MonoConfig/Fisheye.yam
 
 # # stereo
 # rosrun orb_slam3_ros Stereo ../Vocabulary/ORBvoc.txt ../MonoConfig/ZED_Mini.yaml false
+
+# # stereo_with_mask
+# rosrun orb_slam3_ros Stereo_mask ../Vocabulary/ORBvoc.txt ../MonoConfig/ZED_Mini.yaml false
